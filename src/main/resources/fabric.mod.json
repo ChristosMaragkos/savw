@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "savw",
+	"version": "${version}",
+	"name": "Sky Above, Voice Within",
+	"description": "Shout your enemies apart with the power of the Thu'um! This mod adds a variety of shouts from The Elder Scrolls V: Skyrim to Minecraft.",
+	"authors": [
+		"White Tower Games"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/savw/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.savw.SkyAboveVoiceWithin"
+		],
+		"client": [
+			"com.savw.SkyAboveVoiceWithinClient"
+		],
+		"fabric-datagen": [
+			"com.savw.SkyAboveVoiceWithinDataGenerator"
+		]
+	},
+	"mixins": [
+		"savw.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.21.4",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
