@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "block/polished_deepslate",
-		"1": "block/stone",
-		"particle": "block/polished_deepslate"
+		"0": "block/polished_blackstone",
+		"1": "block/netherrack",
+		"particle": "block/polished_blackstone"
 	},
 	"elements": [
 		{

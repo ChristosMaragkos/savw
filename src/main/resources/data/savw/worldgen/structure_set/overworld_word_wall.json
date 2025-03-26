@@ -1,0 +1,18 @@
+{
+  "structures":[
+    {
+      "structure": "savw:overworld_word_wall",
+      "weight": 7
+    },
+    {
+      "structure": "savw:overworld_word_wall_aboveground",
+      "weight": 3
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 40,
+    "separation": 24,
+    "salt": 126537121
+  }
+}

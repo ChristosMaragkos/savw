@@ -1,0 +1,14 @@
+{
+  "structures":[
+    {
+      "structure": "savw:nether_word_wall",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 24,
+    "separation": 16,
+    "salt": 126537121
+  }
+}
