@@ -8,16 +8,29 @@ import java.util.List;
 
 import static com.savw.word.Words.*;
 
-public class Shouts {
+@SuppressWarnings("SpellCheckingInspection")
+public final class Shouts {
+
+    /// Dummy Shout to avoid null pointer exceptions when registering new PlayerData.
+    /// This is not a real shout, but it is used to avoid using null as an initial shout.
+    public static final DummyInitialShout DUMMY_INITIAL_SHOUT = AbstractShout.createShout(
+            DummyInitialShout.class,
+            "Dummy Initial Shout",
+            "No Shout Selected!",
+            DummyWord1,
+            DummyWord2,
+            DummyWord3,
+            null
+    );
 
     public static final UnrelentingForceShout UNRELENTING_FORCE = AbstractShout.createShout(
             UnrelentingForceShout.class,
             "Unrelenting Force",
-            "A powerful shoutToSwitchTo that can knock back enemies.",
+            "Your Voice is raw power, pushing aside anything - or anyone - who stands in your path.",
             Fus,
             Ro,
             Dah,
-            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/unrelenting_force.png")
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
     );
 
     public static final FireBreathShout FIRE_BREATH = AbstractShout.createShout(
@@ -27,7 +40,7 @@ public class Shouts {
             Yol,
             Toor,
             Shul,
-            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/fire_breath.png")
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
     );
 
     public static final BecomeEtherealShout BECOME_ETHEREAL = AbstractShout.createShout(
@@ -37,7 +50,37 @@ public class Shouts {
             Feim,
             Zii,
             Gron,
-            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/unrelenting_force.png")
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
+    );
+
+    public static final FrostBreathShout FROST_BREATH = AbstractShout.createShout(
+            FrostBreathShout.class,
+            "Frost Breath",
+            "Your breath is winter, your Thu'um a blizzard.",
+            Fo,
+            Krah,
+            Diin,
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
+    );
+
+    public static final StormCallShout STORM_CALL = AbstractShout.createShout(
+            StormCallShout.class,
+            "Storm Call",
+            "A Shout to the skies, a cry to the clouds, that awakens the destructive force of Skyrim's lightning.",
+            Strun,
+            Bah,
+            Qo,
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
+    );
+
+    public static final ClearSkiesShout CLEAR_SKIES = AbstractShout.createShout(
+            ClearSkiesShout.class,
+            "Clear Skies",
+            "The land itself yields before the Thu'um, as you clear away fog and inclement weather.",
+            Lok,
+            Vah,
+            Koor,
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
     );
 
     public static void initialize() {
@@ -48,15 +91,35 @@ public class Shouts {
     public static final List<AbstractShout> ALL_SHOUTS = List.of(
             UNRELENTING_FORCE,
             FIRE_BREATH,
-            BECOME_ETHEREAL
+            FROST_BREATH,
+            BECOME_ETHEREAL,
+            STORM_CALL,
+            CLEAR_SKIES
+    );
+
+    public static final List<AbstractShout> ALL_SHOUTS_FOR_CODEC = List.of(
+            UNRELENTING_FORCE,
+            FIRE_BREATH,
+            FROST_BREATH,
+            BECOME_ETHEREAL,
+            STORM_CALL,
+            CLEAR_SKIES,
+            DUMMY_INITIAL_SHOUT
     );
 
     public static AbstractShout getRandomShout(Level level) {
         return ALL_SHOUTS.get(level.random.nextIntBetweenInclusive(0, ALL_SHOUTS.size() - 1));
     }
 
+    @Deprecated(forRemoval = true)
     public static AbstractShout getByName(String name) {
         return ALL_SHOUTS.stream().filter(shout -> shout.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Unknown Shout: " + name));
+    }
+
+    public static AbstractShout getByNameToEncode(String name) {
+        return ALL_SHOUTS_FOR_CODEC.stream().filter(shout -> shout.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("Unknown Shout: " + name));
     }

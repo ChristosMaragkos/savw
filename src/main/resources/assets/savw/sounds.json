@@ -1,0 +1,26 @@
+{
+  "word_unlocked_1": {
+    "subtitle": "Word of Power Unlocked",
+    "sounds": [
+      "savw:word_unlocked_1"
+    ]
+  },
+  "word_unlocked_2": {
+    "subtitle": "Word of Power Unlocked",
+    "sounds": [
+      "savw:word_unlocked_2"
+    ]
+  },
+  "word_unlocked_3": {
+    "subtitle": "Word of Power Unlocked",
+    "sounds": [
+      "savw:word_unlocked_3"
+    ]
+  },
+  "word_wall_passive": {
+    "subtitle": "Word Wall Whispers",
+    "sounds": [
+      "savw:word_wall_passive"
+    ]
+  }
+}

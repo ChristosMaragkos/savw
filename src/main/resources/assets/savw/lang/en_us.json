@@ -1,10 +1,21 @@
 {
-  "block.savw.etched_deepslate": "Etched Deepslate",
-  "item.savw.etched_deepslate": "Etched Deepslate",
+  "block.savw.smart_etched_deepslate": "Etched Deepslate",
+  "item.savw.smart_etched_deepslate": "Etched Deepslate",
 
-  "block.savw.etched_blackstone": "Etched Blackstone",
-  "item.savw.etched_blackstone": "Etched Blackstone",
+  "block.savw.smart_etched_blackstone": "Etched Blackstone",
+  "item.savw.smart_etched_blackstone": "Etched Blackstone",
 
-  "block.savw.etched_end_stone": "Etched End Stone",
-  "item.savw.etched_end_stone": "Etched End Stone"
+  "block.savw.smart_etched_end_stone": "Etched End Stone",
+  "item.savw.smart_etched_end_stone": "Etched End Stone",
+
+  "block.savw.dumb_etched_deepslate": "Etched Deepslate",
+  "item.savw.dumb_etched_deepslate": "Etched Deepslate",
+
+  "block.savw.dumb_etched_blackstone": "Etched Blackstone",
+  "item.savw.dumb_etched_blackstone": "Etched Blackstone",
+
+  "block.savw.dumb_etched_end_stone": "Etched End Stone",
+  "item.savw.dumb_etched_end_stone": "Etched End Stone",
+
+  "effect.savw.ethereal": "Etherealness"
 }

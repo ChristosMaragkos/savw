@@ -16,9 +16,9 @@ public class ModBlockEntityTypes {
 
     public static final BlockEntityType<WordWallBlockEntity> WORD_WALL_BLOCK_ENTITY_TYPE = register("word_wall_block_entity",
             FabricBlockEntityTypeBuilder.create(WordWallBlockEntity::new,
-                    ModBlocks.ETCHED_DEEPSLATE,
-                    ModBlocks.ETCHED_BLACKSTONE,
-                    ModBlocks.ETCHED_END_STONE).build()
+                    ModBlocks.SMART_ETCHED_DEEPSLATE,
+                    ModBlocks.SMART_ETCHED_BLACKSTONE,
+                    ModBlocks.SMART_ETCHED_END_STONE).build()
     );
 
     public static void initialize() {

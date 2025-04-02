@@ -1,7 +1,10 @@
 {
   "type": "minecraft:jigsaw",
-  "biomes": "#c:is_nether",
-  "step": "underground_decoration",
+  "biomes": [
+    "minecraft:nether_wastes",
+    "minecraft:soul_sand_valley"
+  ],
+  "step": "underground_structures",
   "spawn_overrides": {
     "monster": {
       "bounding_box": "piece",
@@ -19,27 +22,14 @@
   "start_pool": "savw:nether_word_walls",
   "size": 1,
   "start_height": {
-    "type": "uniform",
+    "type": "minecraft:biased_to_bottom",
     "min_inclusive": {
       "above_bottom": 32
     },
     "max_inclusive": {
-      "below_top": 40
+      "below_top": 60
     }
   },
   "max_distance_from_center": 80,
-  "use_expansion_hack": false,
-  "placement_conditions": [
-    {
-      "condition": "minecraft:block_state_property",
-      "block": "minecraft:netherrack",
-      "properties": {
-        "state": "minecraft:air"
-      },
-      "predicate": {
-        "condition": "minecraft:match_tag",
-        "tag": "minecraft:air"
-      }
-    }
-  ]
+  "use_expansion_hack": false
 }

@@ -30,7 +30,7 @@ public class StateSaverAndLoader extends SavedData {
      * @return The modified CompoundTag containing the saved state.
      */
     @Override
-    public @NotNull CompoundTag save(CompoundTag compoundTag, HolderLookup.Provider provider) {
+    public @NotNull CompoundTag save(CompoundTag compoundTag, HolderLookup.@NotNull Provider provider) {
 
         CompoundTag playersNbt = new CompoundTag();
         players.forEach(((uuid, playerData) -> {
@@ -42,6 +42,8 @@ public class StateSaverAndLoader extends SavedData {
             playerNbt.put("unlockedWords", listTag);
 
             playerNbt.putString("currentShout", playerData.currentShout != null ? playerData.currentShout.getName() : "");
+
+            playerNbt.putInt("shoutCooldown", playerData.shoutCooldown);
 
             playersNbt.put(uuid.toString(), playerNbt);
         }));
@@ -73,7 +75,9 @@ public class StateSaverAndLoader extends SavedData {
                     .toList();
 
             playerData.currentShout = playersNbt.getCompound(key).getString("currentShout").isEmpty() ? null
-                    : Shouts.getByName(playersNbt.getCompound(key).getString("currentShout"));
+                    : Shouts.getByNameToEncode(playersNbt.getCompound(key).getString("currentShout"));
+
+            playerData.shoutCooldown = playersNbt.getCompound(key).getInt("shoutCooldown");
 
             UUID uuid = UUID.fromString(key);
             state.players.put(uuid, playerData);
@@ -93,6 +97,7 @@ public class StateSaverAndLoader extends SavedData {
         return state;
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private static final Factory<StateSaverAndLoader> TYPE = new Factory<>(
             StateSaverAndLoader::createNew,
             StateSaverAndLoader::createFromNbt,

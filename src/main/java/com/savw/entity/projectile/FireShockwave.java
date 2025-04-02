@@ -1,28 +1,39 @@
 package com.savw.entity.projectile;
 
-import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
-public class FireShockwave extends AbstractShockwaveEntity{
-    public FireShockwave(EntityType<? extends Projectile> entityType, Level level) {
-        super(entityType, level);
+import java.util.Objects;
+
+import static com.savw.SkyAboveVoiceWithin.FIRE_SHOCKWAVE;
+
+public class FireShockwave extends AbstractShockwaveProjectile {
+
+    public FireShockwave(Level level, LivingEntity owner, int wordsUsedToSummon) {
+        super(FIRE_SHOCKWAVE, level, owner, (2f * wordsUsedToSummon)/(1f + wordsUsedToSummon), wordsUsedToSummon);
+    }
+
+    public FireShockwave(EntityType<FireShockwave> fireShockwaveEntityType, Level level) {
+        super(fireShockwaveEntityType, level);
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
+    protected @Nullable ParticleOptions getTrailParticle() {
+        return ParticleTypes.FALLING_LAVA;
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    protected void applyShockwaveEffect(LivingEntity target, ServerLevel serverLevel) {
+        target.hurtServer(serverLevel, damageSources().indirectMagic(Objects.requireNonNull(getOwner()), target),
+                1.5f * getWordsUsedToSummon());
+
+        target.setSharedFlagOnFire(true);
+        target.setRemainingFireTicks(getWordsUsedToSummon() * 60);
     }
 
-    @Override
-    public void useShout(Player player, Level level) {
-
-    }
 }

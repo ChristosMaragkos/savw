@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "savw:block/etched_deepslate"
+    "model": "savw:block/smart_etched_blackstone"
   }
 }

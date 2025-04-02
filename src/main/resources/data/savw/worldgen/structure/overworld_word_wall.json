@@ -15,7 +15,7 @@
       ]
     }
   },
-  "terrain_adaptation": "beard_box",
+  "terrain_adaptation": "beard_thin",
   "start_pool": "savw:overworld_word_walls",
   "size": 1,
   "start_height": {
@@ -27,12 +27,6 @@
       "below_top": 260
     }
   },
-  "placement_conditions": [
-    {
-      "condition": "minecraft:not_matching_block",
-      "block": "minecraft:water"
-    }
-  ],
   "max_distance_from_center": 80,
   "use_expansion_hack": false
 }

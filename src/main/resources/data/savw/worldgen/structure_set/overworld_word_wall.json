@@ -1,5 +1,5 @@
 {
-  "structures":[
+  "structures": [
     {
       "structure": "savw:overworld_word_wall",
       "weight": 7
@@ -11,8 +11,8 @@
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "spacing": 40,
-    "separation": 24,
-    "salt": 126537121
+    "spacing": 45,
+    "separation": 28,
+    "salt": 693669294
   }
 }

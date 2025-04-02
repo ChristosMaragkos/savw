@@ -15,20 +15,35 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class ModBlocks {
 
-    public static final Block ETCHED_DEEPSLATE = registerBlock("etched_deepslate",
+    public static final Block SMART_ETCHED_DEEPSLATE = registerBlock("smart_etched_deepslate",
             new WordWallBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.REINFORCED_DEEPSLATE)
                     .setId(ResourceKey.create(Registries.BLOCK,
-                            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "etched_deepslate")))));
+                            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "smart_etched_deepslate")))));
 
-    public static final Block ETCHED_BLACKSTONE = registerBlock("etched_blackstone",
+    public static final Block SMART_ETCHED_BLACKSTONE = registerBlock("smart_etched_blackstone",
             new WordWallBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
                     .setId(ResourceKey.create(Registries.BLOCK,
-                            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "etched_blackstone")))));
+                            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "smart_etched_blackstone")))));
 
-    public static final Block ETCHED_END_STONE = registerBlock("etched_end_stone",
+    public static final Block SMART_ETCHED_END_STONE = registerBlock("smart_etched_end_stone",
             new WordWallBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
                     .setId(ResourceKey.create(Registries.BLOCK,
-                            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "etched_end_stone")))));
+                            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "smart_etched_end_stone")))));
+
+    public static final Block DUMB_ETCHED_DEEPSLATE = registerBlock("dumb_etched_deepslate",
+            new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.REINFORCED_DEEPSLATE)
+                    .setId(ResourceKey.create(Registries.BLOCK,
+                            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "dumb_etched_deepslate")))));
+
+    public static final Block DUMB_ETCHED_BLACKSTONE = registerBlock("dumb_etched_blackstone",
+            new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
+                    .setId(ResourceKey.create(Registries.BLOCK,
+                            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "dumb_etched_blackstone")))));
+
+    public static final Block DUMB_ETCHED_END_STONE = registerBlock("dumb_etched_end_stone",
+            new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
+                    .setId(ResourceKey.create(Registries.BLOCK,
+                            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "dumb_etched_end_stone")))));
     
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);
