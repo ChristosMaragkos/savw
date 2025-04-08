@@ -95,6 +95,16 @@ public final class Shouts {
             ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
     ));
 
+    public static final DrainVitalityShout DRAIN_VITALITY = registerShout(AbstractShout.createShout(
+            DrainVitalityShout.class,
+            "Drain Vitality",
+            "Coax both magical and mortal energies\nfrom your hapless opponent.",
+            Gaan,
+            Lah,
+            Haas,
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
+    ));
+
     public static void initialize() {
         SkyAboveVoiceWithin.LOGGER.info("Shouts initialized!");
 
@@ -107,6 +117,7 @@ public final class Shouts {
             BECOME_ETHEREAL,
             STORM_CALL,
             WHIRLWIND_SPRINT,
+            DRAIN_VITALITY,
             CLEAR_SKIES
     );
 
@@ -118,6 +129,7 @@ public final class Shouts {
             STORM_CALL,
             CLEAR_SKIES,
             WHIRLWIND_SPRINT,
+            DRAIN_VITALITY,
             DUMMY_INITIAL_SHOUT
     );
 
@@ -125,7 +137,7 @@ public final class Shouts {
         return ALL_SHOUTS.get(level.random.nextIntBetweenInclusive(0, ALL_SHOUTS.size() - 1));
     }
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public static AbstractShout getByName(String name) {
         return ALL_SHOUTS.stream().filter(shout -> shout.getName().equals(name))
                 .findFirst()

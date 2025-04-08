@@ -61,6 +61,12 @@ public final class Words {
 
     public static final ShoutWord Kest = registerWord(ShoutWord.create("Kest", 17, 30, "Tempest"));
 
+    public static final ShoutWord Gaan = registerWord(ShoutWord.create("Gaan", 20, 20, "Stamina"));
+
+    public static final ShoutWord Lah = registerWord(ShoutWord.create("Lah", 25, 25, "Magicka"));
+
+    public static final ShoutWord Haas = registerWord(ShoutWord.create("Haas", 30, 30, "Health"));
+
     public static void initialize() {
         SkyAboveVoiceWithin.LOGGER.info("Words initialized!");
     }
@@ -86,7 +92,10 @@ public final class Words {
             Koor,
             Wuld,
             Nah,
-            Kest
+            Kest,
+            Gaan,
+            Lah,
+            Haas
     );
 
     public static ShoutWord getByName(String name) {

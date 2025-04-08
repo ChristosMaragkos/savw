@@ -4,6 +4,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -33,6 +34,8 @@ public class DrainingShockwave extends AbstractShockwaveProjectile{
 
     @Override
     protected void applyShockwaveEffect(LivingEntity target, ServerLevel serverLevel) {
+        serverLevel.playSound(null, target.getX(), target.getY(), target.getZ(),
+                SoundEvents.WITHER_SPAWN, target.getSoundSource(), 0.7f, 0.8f);
         switch (getWordsUsedToSummon()) {
             case 1 -> {
                 if (getOwner() instanceof ServerPlayer serverPlayer) {
