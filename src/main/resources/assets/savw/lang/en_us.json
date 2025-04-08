@@ -18,5 +18,7 @@
   "item.savw.dumb_etched_end_stone": "Etched End Stone",
 
   "effect.savw.ethereal": "Etherealness",
-  "effect.savw.shout_cooldown": "Shout Cooldown"
+  "effect.savw.shout_cooldown": "Shout Cooldown",
+  "effect.savw.stamina_replenished": "Stamina Regen",
+  "effect.savw.stamina_drained": "Stamina Drain"
 }

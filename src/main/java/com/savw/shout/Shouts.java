@@ -1,18 +1,21 @@
 package com.savw.shout;
 
 import com.savw.SkyAboveVoiceWithin;
+import com.savw.registry.SkyAboveVoiceWithinRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
 
+import static com.savw.SkyAboveVoiceWithin.withModId;
 import static com.savw.word.Words.*;
 
 public final class Shouts {
 
     /// Dummy Shout to avoid null pointer exceptions when registering new PlayerData.
     /// This is not a real shout, but it is used to avoid using null as an initial shout.
-    public static final DummyInitialShout DUMMY_INITIAL_SHOUT = AbstractShout.createShout(
+    public static final DummyInitialShout DUMMY_INITIAL_SHOUT = registerShout(AbstractShout.createShout(
             DummyInitialShout.class,
             "Dummy Initial Shout",
             "No Shout Selected!",
@@ -20,9 +23,9 @@ public final class Shouts {
             DummyWord2,
             DummyWord3,
             null
-    );
+    ));
 
-    public static final UnrelentingForceShout UNRELENTING_FORCE = AbstractShout.createShout(
+    public static final UnrelentingForceShout UNRELENTING_FORCE = registerShout(AbstractShout.createShout(
             UnrelentingForceShout.class,
             "Unrelenting Force",
             "Your Voice is raw power, \npushing aside anything - or anyone - who stands in your path.",
@@ -30,9 +33,9 @@ public final class Shouts {
             Ro,
             Dah,
             ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/unrelenting_force.png")
-    );
+    ));
 
-    public static final FireBreathShout FIRE_BREATH = AbstractShout.createShout(
+    public static final FireBreathShout FIRE_BREATH = registerShout(AbstractShout.createShout(
             FireBreathShout.class,
             "Fire Breath",
             "Inhale air, exhale flame, and behold the Thu'um as inferno.",
@@ -40,9 +43,9 @@ public final class Shouts {
             Toor,
             Shul,
             ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
-    );
+    ));
 
-    public static final BecomeEtherealShout BECOME_ETHEREAL = AbstractShout.createShout(
+    public static final BecomeEtherealShout BECOME_ETHEREAL = registerShout(AbstractShout.createShout(
             BecomeEtherealShout.class,
             "Become Ethereal",
             "The Thu'um reaches out to the Void, \nchanging your form to one that cannot harm, or be harmed.",
@@ -50,9 +53,9 @@ public final class Shouts {
             Zii,
             Gron,
             ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
-    );
+    ));
 
-    public static final FrostBreathShout FROST_BREATH = AbstractShout.createShout(
+    public static final FrostBreathShout FROST_BREATH = registerShout(AbstractShout.createShout(
             FrostBreathShout.class,
             "Frost Breath",
             "Your breath is winter, your Thu'um a blizzard.",
@@ -60,9 +63,9 @@ public final class Shouts {
             Krah,
             Diin,
             ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
-    );
+    ));
 
-    public static final StormCallShout STORM_CALL = AbstractShout.createShout(
+    public static final StormCallShout STORM_CALL = registerShout(AbstractShout.createShout(
             StormCallShout.class,
             "Storm Call",
             "A Shout to the skies, a cry to the clouds, \nthat awakens the destructive force of the land's lightning.",
@@ -70,9 +73,9 @@ public final class Shouts {
             Bah,
             Qo,
             ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
-    );
+    ));
 
-    public static final ClearSkiesShout CLEAR_SKIES = AbstractShout.createShout(
+    public static final ClearSkiesShout CLEAR_SKIES = registerShout(AbstractShout.createShout(
             ClearSkiesShout.class,
             "Clear Skies",
             "The land itself yields before the Thu'um, \nas you clear away fog and inclement weather.",
@@ -80,9 +83,9 @@ public final class Shouts {
             Vah,
             Koor,
             ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
-    );
+    ));
 
-    public static final WhirlwindSprintShout WHIRLWIND_SPRINT = AbstractShout.createShout(
+    public static final WhirlwindSprintShout WHIRLWIND_SPRINT = registerShout(AbstractShout.createShout(
             WhirlwindSprintShout.class,
             "Whirlwind Sprint",
             "The Thu'um rushes forward, carrying you \nin its wake with the speed of a tempest.",
@@ -90,7 +93,7 @@ public final class Shouts {
             Nah,
             Kest,
             ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
-    );
+    ));
 
     public static void initialize() {
         SkyAboveVoiceWithin.LOGGER.info("Shouts initialized!");
@@ -122,7 +125,7 @@ public final class Shouts {
         return ALL_SHOUTS.get(level.random.nextIntBetweenInclusive(0, ALL_SHOUTS.size() - 1));
     }
 
-    @Deprecated(forRemoval = true)
+    @Deprecated
     public static AbstractShout getByName(String name) {
         return ALL_SHOUTS.stream().filter(shout -> shout.getName().equals(name))
                 .findFirst()
@@ -134,4 +137,12 @@ public final class Shouts {
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("Unknown Shout: " + name));
     }
+
+    private static <S extends AbstractShout> S registerShout(S shout){
+        return Registry.register(SkyAboveVoiceWithinRegistries.SHOUTS,
+                withModId(shout.getName().toLowerCase().replaceAll(" ", "_")),
+                shout
+        );
+    }
+
 }

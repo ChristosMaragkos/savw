@@ -3,11 +3,14 @@ package com.savw;
 
 import com.savw.block.SkyAboveVoiceWithinBlocks;
 import com.savw.block.blocks.SkyAboveVoiceWithinBlockEntityTypes;
+import com.savw.command.SkyAboveVoiceWithinCommands;
 import com.savw.effect.SkyAboveVoiceWithinMobEffects;
+import com.savw.entity.projectile.DrainingShockwave;
 import com.savw.entity.projectile.FireShockwave;
 import com.savw.entity.projectile.ForceShockwave;
 import com.savw.entity.projectile.FrostShockwave;
 import com.savw.networking.*;
+import com.savw.registry.SkyAboveVoiceWithinRegistries;
 import com.savw.shout.Shouts;
 import com.savw.sound.SkyAboveVoiceWithinSounds;
 import com.savw.word.Words;
@@ -26,7 +29,6 @@ import org.slf4j.LoggerFactory;
 public class SkyAboveVoiceWithin implements ModInitializer {
 	public static final String MOD_ID = "savw";
 
-	@Deprecated
 	public static ResourceLocation withModId(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
 	}
@@ -72,9 +74,23 @@ public class SkyAboveVoiceWithin implements ModInitializer {
 					))
 	);
 
+	public static final EntityType<DrainingShockwave> DRAINING_SHOCKWAVE = Registry.register(
+			BuiltInRegistries.ENTITY_TYPE,
+			withModId("draining_shockwave"),
+			EntityType.Builder.<DrainingShockwave>of(DrainingShockwave::new, MobCategory.MISC)
+					.sized(1.0f, 1.0f)
+					.updateInterval(10)
+					.alwaysUpdateVelocity(true)
+					.build(ResourceKey.create(
+							Registries.ENTITY_TYPE,
+							ResourceLocation.fromNamespaceAndPath(MOD_ID, "draining_shockwave")
+					))
+	);
+
     @Override
 	public void onInitialize() {
-		LOGGER.info("Sky Above, Voice Within mod initialized!");
+
+		SkyAboveVoiceWithinRegistries.initialize();
 
 		SkyAboveVoiceWithinNetworking.initialize();
         SkyAboveVoiceWithinBlocks.initialize();
@@ -83,6 +99,9 @@ public class SkyAboveVoiceWithin implements ModInitializer {
 		Words.initialize();
 		Shouts.initialize();
 		SkyAboveVoiceWithinSounds.initialize();
+		SkyAboveVoiceWithinCommands.initialize();
+
+		LOGGER.info("Sky Above, Voice Within mod initialized!");
 
 	}
 }

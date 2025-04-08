@@ -19,6 +19,16 @@ public class SkyAboveVoiceWithinMobEffects {
                     ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "shout_cooldown"),
                     new ShoutCooldownMobEffect());
 
+    public static final Holder<MobEffect> STAMINA_REPLENISHED =
+            Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT,
+                    ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "stamina_replenished"),
+                    new StaminaReplenishedMobEffect());
+
+    public static final Holder<MobEffect> STAMINA_DRAINED =
+            Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT,
+                    ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "stamina_drained"),
+                    new StaminaDrainedMobEffect());
+
     public static void initialize(){
         SkyAboveVoiceWithin.LOGGER.info("Sky Above, Voice Within effects initialized!");
     }

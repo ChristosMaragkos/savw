@@ -29,6 +29,8 @@ public abstract class AbstractShockwaveProjectile extends AbstractHurtingProject
 
     private final int wordsUsedToSummon;
 
+    private final boolean stopUponImpact;
+
     @Override
     protected @Nullable ParticleOptions getTrailParticle() {
         return null;
@@ -60,6 +62,21 @@ public abstract class AbstractShockwaveProjectile extends AbstractHurtingProject
         Vec3 lookingDirection = owner.getLookAngle().normalize().scale(speed);
 
         this.setDeltaMovement(lookingDirection);
+
+        this.stopUponImpact = false;
+    }
+
+    public AbstractShockwaveProjectile(EntityType<? extends AbstractHurtingProjectile> entityType, Level level,
+                                       LivingEntity owner, float speed, int wordsUsedToSummon, boolean stopUponImpact) {
+        super(entityType, owner.getX(), owner.getY() + 1, owner.getZ(), owner.getEyePosition().normalize().scale(speed), level);
+        this.setOwner(owner);
+        this.setRot(owner.getYRot(), owner.getXRot());
+        this.setNoGravity(true);
+        this.lifetime = 20;
+        this.wordsUsedToSummon = wordsUsedToSummon;
+        Vec3 lookingDirection = owner.getLookAngle().normalize().scale(speed);
+        this.setDeltaMovement(lookingDirection);
+        this.stopUponImpact = stopUponImpact;
     }
 
     /// ### Constructor
@@ -89,6 +106,11 @@ public abstract class AbstractShockwaveProjectile extends AbstractHurtingProject
 
         if (target instanceof LivingEntity livingEntity && target != this.getOwner() && this.level() instanceof ServerLevel serverLevel) {
             applyShockwaveEffect(livingEntity, serverLevel);
+
+            if (shouldStopUponImpact()) {
+                this.remove(RemovalReason.DISCARDED);
+            }
+
         }
     }
 
@@ -132,4 +154,7 @@ public abstract class AbstractShockwaveProjectile extends AbstractHurtingProject
         return wordsUsedToSummon;
     }
 
+    public final boolean shouldStopUponImpact() {
+        return this.stopUponImpact;
+    }
 }

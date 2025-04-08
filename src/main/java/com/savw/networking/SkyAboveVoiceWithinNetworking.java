@@ -66,7 +66,6 @@ public final class SkyAboveVoiceWithinNetworking {
                     playerState.shoutCooldown = !serverPlayer.isCreative() ?
                             playerState.currentShout.getSpecificWord(useShoutC2SPayload.wordsUsed() - 1).getCooldown() * 20 : 20;
                     serverPlayer.addEffect(new MobEffectInstance(SkyAboveVoiceWithinMobEffects.SHOUT_COOLDOWN, !serverPlayer.isCreative() ? playerState.shoutCooldown : 20, 0, false, true));
-                    SkyAboveVoiceWithin.LOGGER.info("{}", serverPlayer.isCreative());
                     ServerPlayNetworking.send(serverPlayer, new SyncCooldownS2CPayload(playerState.shoutCooldown));
                 } else {
                     serverPlayer.displayClientMessage(Component.literal("No Shout selected!"), true);
