@@ -95,7 +95,7 @@ public abstract class AbstractShockwaveProjectile extends AbstractHurtingProject
     /// Override this method in subclasses to apply the desired effect to the target entity.
     /// Collision is already handled by the superclass method `onHitEntity`.
     /// All you need to do is code the effect you want to apply to the target entity.
-    /// Convenient, fromCooldown?
+    /// Convenient, eh?
     protected abstract void applyShockwaveEffect(LivingEntity target, ServerLevel serverLevel);
 
     /// Helper method to check if the projectile is blocked by a wall
