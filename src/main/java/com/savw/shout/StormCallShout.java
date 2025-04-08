@@ -4,7 +4,6 @@ import com.savw.word.ShoutWord;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
@@ -15,9 +14,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import wtg.std.task.ServerEvents;
+import wtg.std.task.ServerTickTask;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 public final class StormCallShout extends AbstractShout {
 
@@ -93,15 +93,13 @@ public final class StormCallShout extends AbstractShout {
     protected static class StormCallHandler{
         private final ServerLevel level;
         private final Player player;
-        private int ticksRemaining;
+        private final int ticksRemaining;
         private final int lightningInterval;
         private int lightningCounter;
         private final int wordsUsed;
         public boolean isStormActive;
         private int ticksToStartThunder;
         private final StormCallShout parent;
-
-        private Consumer<MinecraftServer> stormTick;
 
         /// Constructs a new StormCallHandler.
         ///
@@ -124,36 +122,33 @@ public final class StormCallShout extends AbstractShout {
             this.parent = parent;
         }
 
+
         public void startStorm() {
 
             this.level.setWeatherParameters(this.ticksRemaining + 280, 0, true, true); // Start storm
 
-            stormTick = server -> {
-                if (!isStormActive){
-                    this.level.setWeatherParameters(0, 6000, false, false); // Stop storm
-                    parent.stormCallHandler = null;
-                    UnregisterableServerTickEvent.unregister(stormTick);
-                } else {
-                    if (ticksToStartThunder > 0) {
-                        ticksToStartThunder--;
-                        return; // Wait for the initial delay before starting thunder
-                    }
-                    this.ticksRemaining--;
-                    if (this.ticksRemaining <= 0) {
-                        this.isStormActive = false;
-                        return;
-                    }
-
-                    this.lightningCounter++;
-
-                    if (this.lightningCounter >= this.lightningInterval) {
-                        lightningCounter = 0;
-                        strikeLightning();
-                    }
+            ServerTickTask stormTickTask = new ServerTickTask(ticksRemaining + 80, server -> {
+                if (ticksToStartThunder > 0) {
+                    ticksToStartThunder--;
+                    return; // Wait for the initial delay before starting thunder
                 }
-            };
 
-            UnregisterableServerTickEvent.register(stormTick);
+                this.lightningCounter++;
+
+                if (this.lightningCounter >= this.lightningInterval && this.isStormActive) {
+                    this.lightningCounter = 0;
+                    strikeLightning();
+                }
+            });
+
+            ServerTickTask afterStormTask = new ServerTickTask(1, server -> {
+                this.level.setWeatherParameters(0, 6000, false, false); // Stop storm
+                this.isStormActive = false;
+                parent.stormCallHandler = null;
+            });
+
+            ServerEvents.registerAt(ServerEvents.END_SERVER_TICK, stormTickTask)
+                    .appendAfterEnd(afterStormTask, ServerEvents.END_SERVER_TICK);
 
         }
 
