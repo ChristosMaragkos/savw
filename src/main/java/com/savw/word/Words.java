@@ -39,17 +39,23 @@ public final class Words {
 
     public static final ShoutWord Diin = ShoutWord.create("Diin", 20, 30, "Freeze");
 
-    public static final ShoutWord Strun = ShoutWord.create("Strun", 1, 35, "Storm");
+    public static final ShoutWord Strun = ShoutWord.create("Strun", 60, 35, "Storm");
 
-    public static final ShoutWord Bah = ShoutWord.create("Bah", 1, 40, "Wrath");
+    public static final ShoutWord Bah = ShoutWord.create("Bah", 100, 40, "Wrath");
 
-    public static final ShoutWord Qo = ShoutWord.create("Qo", 1, 45, "Lightning");
+    public static final ShoutWord Qo = ShoutWord.create("Qo", 140, 45, "Lightning");
 
     public static final ShoutWord Lok = ShoutWord.create("Lok", 6, 10, "Sky");
 
     public static final ShoutWord Vah = ShoutWord.create("Vah", 8, 12, "Spring");
 
     public static final ShoutWord Koor = ShoutWord.create("Koor", 10, 15, "Summer");
+
+    public static final ShoutWord Wuld = ShoutWord.create("Wuld", 13, 20, "Whirlwind");
+
+    public static final ShoutWord Nah = ShoutWord.create("Nah", 15, 25, "Fury");
+
+    public static final ShoutWord Kest = ShoutWord.create("Kest", 17, 30, "Tempest");
 
     public static void initialize() {
         SkyAboveVoiceWithin.LOGGER.info("Words initialized!");
@@ -73,7 +79,10 @@ public final class Words {
             Qo,
             Lok,
             Vah,
-            Koor
+            Koor,
+            Wuld,
+            Nah,
+            Kest
     );
 
     public static ShoutWord getByName(String name) {

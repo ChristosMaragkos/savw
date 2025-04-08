@@ -2,7 +2,15 @@
   "structures": [
     {
       "structure": "savw:overworld_word_wall",
-      "weight": 7
+      "weight": 4
+    },
+    {
+      "structure": "savw:overworld_word_wall_moss",
+      "weight": 2
+    },
+    {
+      "structure": "savw:overworld_word_wall_sculk",
+      "weight": 1
     },
     {
       "structure": "savw:overworld_word_wall_aboveground",
@@ -12,7 +20,7 @@
   "placement": {
     "type": "minecraft:random_spread",
     "spacing": 45,
-    "separation": 28,
-    "salt": 693669294
+    "separation": 30,
+    "salt": 69366929432
   }
 }

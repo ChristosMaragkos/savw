@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-public class ModBlocks {
+public class SkyAboveVoiceWithinBlocks {
 
     public static final Block SMART_ETCHED_DEEPSLATE = registerBlock("smart_etched_deepslate",
             new WordWallBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.REINFORCED_DEEPSLATE)

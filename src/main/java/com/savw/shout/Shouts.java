@@ -8,7 +8,6 @@ import java.util.List;
 
 import static com.savw.word.Words.*;
 
-@SuppressWarnings("SpellCheckingInspection")
 public final class Shouts {
 
     /// Dummy Shout to avoid null pointer exceptions when registering new PlayerData.
@@ -26,11 +25,11 @@ public final class Shouts {
     public static final UnrelentingForceShout UNRELENTING_FORCE = AbstractShout.createShout(
             UnrelentingForceShout.class,
             "Unrelenting Force",
-            "Your Voice is raw power, pushing aside anything - or anyone - who stands in your path.",
+            "Your Voice is raw power, \npushing aside anything - or anyone - who stands in your path.",
             Fus,
             Ro,
             Dah,
-            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/unrelenting_force.png")
     );
 
     public static final FireBreathShout FIRE_BREATH = AbstractShout.createShout(
@@ -46,7 +45,7 @@ public final class Shouts {
     public static final BecomeEtherealShout BECOME_ETHEREAL = AbstractShout.createShout(
             BecomeEtherealShout.class,
             "Become Ethereal",
-            "The Thu'um reaches out to the Void, changing your form to one that cannot harm, or be harmed.",
+            "The Thu'um reaches out to the Void, \nchanging your form to one that cannot harm, or be harmed.",
             Feim,
             Zii,
             Gron,
@@ -66,7 +65,7 @@ public final class Shouts {
     public static final StormCallShout STORM_CALL = AbstractShout.createShout(
             StormCallShout.class,
             "Storm Call",
-            "A Shout to the skies, a cry to the clouds, that awakens the destructive force of Skyrim's lightning.",
+            "A Shout to the skies, a cry to the clouds, \nthat awakens the destructive force of the land's lightning.",
             Strun,
             Bah,
             Qo,
@@ -76,10 +75,20 @@ public final class Shouts {
     public static final ClearSkiesShout CLEAR_SKIES = AbstractShout.createShout(
             ClearSkiesShout.class,
             "Clear Skies",
-            "The land itself yields before the Thu'um, as you clear away fog and inclement weather.",
+            "The land itself yields before the Thu'um, \nas you clear away fog and inclement weather.",
             Lok,
             Vah,
             Koor,
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
+    );
+
+    public static final WhirlwindSprintShout WHIRLWIND_SPRINT = AbstractShout.createShout(
+            WhirlwindSprintShout.class,
+            "Whirlwind Sprint",
+            "The Thu'um rushes forward, carrying you \nin its wake with the speed of a tempest.",
+            Wuld,
+            Nah,
+            Kest,
             ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
     );
 
@@ -94,6 +103,7 @@ public final class Shouts {
             FROST_BREATH,
             BECOME_ETHEREAL,
             STORM_CALL,
+            WHIRLWIND_SPRINT,
             CLEAR_SKIES
     );
 
@@ -104,6 +114,7 @@ public final class Shouts {
             BECOME_ETHEREAL,
             STORM_CALL,
             CLEAR_SKIES,
+            WHIRLWIND_SPRINT,
             DUMMY_INITIAL_SHOUT
     );
 

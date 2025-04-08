@@ -75,17 +75,14 @@ public abstract class AbstractShockwaveProjectile extends AbstractHurtingProject
     @Override
     public void tick() {
         super.tick();
-        if (this.lifetime != 0) {
-            this.lifetime--;
-        } else {
-            this.remove(RemovalReason.DISCARDED);
-        }
-        // Stop only if a significant part of the wave is blocked
-        if (isBlockedByWall()) {
+        if (this.lifetime-- == 0 || isBlockedByWall()) {
             this.remove(RemovalReason.DISCARDED);
         }
     }
 
+    /// Do not override this method in subclasses!
+    /// Instead, override the `applyShockwaveEffect` method.
+    /// @see #applyShockwaveEffect(LivingEntity, ServerLevel)
     @Override
     protected void onHitEntity(EntityHitResult result) {
         Entity target = result.getEntity();
@@ -95,6 +92,10 @@ public abstract class AbstractShockwaveProjectile extends AbstractHurtingProject
         }
     }
 
+    /// Override this method in subclasses to apply the desired effect to the target entity.
+    /// Collision is already handled by the superclass method `onHitEntity`.
+    /// All you need to do is code the effect you want to apply to the target entity.
+    /// Convenient, fromCooldown?
     protected abstract void applyShockwaveEffect(LivingEntity target, ServerLevel serverLevel);
 
     /// Helper method to check if the projectile is blocked by a wall
@@ -104,7 +105,7 @@ public abstract class AbstractShockwaveProjectile extends AbstractHurtingProject
     private boolean isBlockedByWall() {
         Vec3 direction = this.getDeltaMovement().normalize();
         double checkDistance = 0.1; // How far ahead we check
-        int rayCount = 4; // Number of rays to cast across the front
+        int rayCount = 2; // Number of rays to cast across the front
         int hitCount = 0; // Count how many rays actually hit blocks
         double spread = 0.4; // How much to spread the rays horizontally
 
@@ -124,10 +125,10 @@ public abstract class AbstractShockwaveProjectile extends AbstractHurtingProject
         }
 
         // Stop if at least 3 out of 4 rays hit something (adjust threshold as needed)
-        return hitCount >= 3;
+        return hitCount >= 1;
     }
 
-    public int getWordsUsedToSummon() {
+    public final int getWordsUsedToSummon() {
         return wordsUsedToSummon;
     }
 
