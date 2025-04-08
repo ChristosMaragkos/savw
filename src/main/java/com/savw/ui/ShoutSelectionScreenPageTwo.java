@@ -28,7 +28,7 @@ public class ShoutSelectionScreenPageTwo extends BaseOwoScreen<GridLayout> {
 
         rootComponent.child(Components.button(Component.literal("←"), buttonComponent -> Minecraft.getInstance().setScreen(new ShoutSelectionScreenPageOne())).tooltip(Component.literal("Previous Page")), 1, 0);
 
-        rootComponent.child(Components.label(Component.literal("Look out for more Shouts\nin future updates!")), 0, 1);
+        rootComponent.child(Components.label(Component.literal("Look out for more\n       Shouts\nin future updates!")), 1, 1);
 
     }
 }

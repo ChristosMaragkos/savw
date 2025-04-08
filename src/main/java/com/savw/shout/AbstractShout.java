@@ -16,7 +16,6 @@ import static com.savw.shout.Shouts.ALL_SHOUTS_FOR_CODEC;
 /// # AbstractShout
 /// Abstract class representing a shout in the game.
 /// This class contains common properties and methods for all shouts.
-///
 public abstract class AbstractShout {
 
     private final String name;
@@ -40,21 +39,22 @@ public abstract class AbstractShout {
     /// ### createShout
     /// Factory method to create singleton instances of AbstractShout subclasses.
     ///
-    /// @param shoutClass  the class of the shout to be created
-    /// @param name        the name of the shout
-    /// @param description the description of the shout
-    /// @param firstWord   the first word of the shout
-    /// @param secondWord  the second word of the shout
-    /// @param thirdWord   the third word of the shout
-    /// @param iconLocation the icon location of the shout
-    /// @param <S>         the type of the shout, a class that extends AbstractShout.
+    /// @param shoutClass   the class of the shout to be created
+    /// @param name         the name of the shout
+    /// @param description  the description of the shout
+    /// @param firstWord    the first word of the shout
+    /// @param secondWord   the second word of the shout
+    /// @param thirdWord    the third word of the shout
+    /// @param iconLocation the resource location of the shout's icon
+    /// @param <S>          the type of the shout, a class that extends AbstractShout.
     /// @return an instance of the specified shout subclass
     public static <S extends AbstractShout> S createShout(Class<S> shoutClass, String name, String description, ShoutWord firstWord, ShoutWord secondWord, ShoutWord thirdWord, ResourceLocation iconLocation) {
         try {
             Constructor<S> constructor = shoutClass.getDeclaredConstructor(String.class, String.class, ShoutWord.class, ShoutWord.class, ShoutWord.class, ResourceLocation.class);
             constructor.setAccessible(true); // Allow access to private constructor
             return constructor.newInstance(name, description, firstWord, secondWord, thirdWord, iconLocation);
-        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                 InvocationTargetException e) {
             throw new RuntimeException("Failed to create shoutToSwitchTo instance", e);
         }
     }
@@ -64,6 +64,7 @@ public abstract class AbstractShout {
     /// The codec uses a flatXmap to map between the shout name and the corresponding AbstractShout (or subclass thereof) instance.
     ///
     /// If the shout name is not found, an error is returned.
+    ///
     /// @see com.savw.shout.Shouts#ALL_SHOUTS
     public static final Codec<AbstractShout> SHOUT_NAME_CODEC = Codec.STRING.flatXmap(
             name -> ALL_SHOUTS_FOR_CODEC.stream()
@@ -119,20 +120,27 @@ public abstract class AbstractShout {
         return count;
     }
 
-    /// Abstract method to be implemented by subclasses
+    /// Abstract method to be implemented by subclasses.
+    ///
+    /// @param player    the player using the shout
+    /// @param level     the level in which the shout is used
+    /// @param wordsUsed the number of words used in the shout
+    /// @implSpec Keep in mind that this method is called on the server side.
+    /// As such, any Shouts that implement effects which must be handled client-side require that their implementation
+    /// of this method sends a custom S2C packet, and the client must handle the effects. <br>For an example, see {@link WhirlwindSprintShout}
     public abstract void useShout(Player player, Level level, int wordsUsed);
 
-public ShoutWord tryUnlockWord(List<ShoutWord> shoutWordList) {
-    if (!shoutWordList.contains(getFirstWord())) {
-        return getFirstWord();
+    public ShoutWord tryUnlockWord(List<ShoutWord> shoutWordList) {
+        if (!shoutWordList.contains(getFirstWord())) {
+            return getFirstWord();
+        }
+        if (!shoutWordList.contains(getSecondWord())) {
+            return getSecondWord();
+        }
+        if (!shoutWordList.contains(getThirdWord())) {
+            return getThirdWord();
+        }
+        return null;
     }
-    if (!shoutWordList.contains(getSecondWord())) {
-        return getSecondWord();
-    }
-    if (!shoutWordList.contains(getThirdWord())) {
-        return getThirdWord();
-    }
-    return null;
-}
 
 }

@@ -15,8 +15,7 @@ public final class UnregisterableServerTickEvent {
     /**
      * A set of callbacks to be executed at the end of each server tick.
      */
-    @SuppressWarnings("FieldMayBeFinal")
-    private static Set<Consumer<MinecraftServer>> callbacks = new HashSet<>();
+    private static final Set<Consumer<MinecraftServer>> callbacks = new HashSet<>();
 
     static {
         ServerTickEvents.END_SERVER_TICK.register(server -> {

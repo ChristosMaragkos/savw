@@ -37,8 +37,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.savw.block.ModBlocks.*;
-import static com.savw.block.blocks.ModBlockEntityTypes.WORD_WALL_BLOCK_ENTITY_TYPE;
+import static com.savw.block.SkyAboveVoiceWithinBlocks.*;
+import static com.savw.block.blocks.SkyAboveVoiceWithinBlockEntityTypes.WORD_WALL_BLOCK_ENTITY_TYPE;
 import static com.savw.word.Words.ALL_WORDS;
 
 public class WordWallBlockEntity extends BlockEntity implements TickableBlockEntity{

@@ -1,5 +1,6 @@
 package com.savw.shout;
 
+import com.savw.effect.SkyAboveVoiceWithinMobEffects;
 import com.savw.word.ShoutWord;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -30,9 +31,10 @@ public final class BecomeEtherealShout extends AbstractShout{
             return;
         }
         int duration = 60 * wordsUsed;
-        player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, duration, 0, false, false, false));
-        player.addEffect(new MobEffectInstance(MobEffects.GLOWING, duration, 0, false, false, false));
-        player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, duration, 0, false, false, false));
+        player.addEffect(new MobEffectInstance(SkyAboveVoiceWithinMobEffects.ETHEREAL, duration, 0, false, true));
+        player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, duration, 255, false, false));
+        player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, duration, 0, false, false));
+        player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration, 255, false, false));
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BREEZE_WIND_CHARGE_BURST, player.getSoundSource(), 3.0F, 1f);
         if (level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(

@@ -6,6 +6,11 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
+/// # EtherealMobEffect
+/// Represents the Ethereal effect in the game.
+/// The effect is used to give the player the same overlay as Charged Creepers.
+/// @see com.savw.shout.BecomeEtherealShout BecomeEtherealShout
+/// @see com.savw.mixin.PlayerRendererMixin PlayerRendererMixin
 public class EtherealMobEffect extends MobEffect {
 
     protected EtherealMobEffect() {
@@ -21,6 +26,5 @@ public class EtherealMobEffect extends MobEffect {
     public boolean applyEffectTick(@NotNull ServerLevel level, @NotNull LivingEntity entity, int amplifier) {
         return super.applyEffectTick(level, entity, amplifier);
     }
-
 
 }

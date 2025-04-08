@@ -1,0 +1,213 @@
+[
+  {
+    "processor_type": "minecraft:capped",
+    "delegate": {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:oak_planks"
+          },
+          "output_state": {
+            "Name": "savw:smart_etched_deepslate"
+          }
+        }
+      ]
+    },
+    "limit": 1
+  },
+  {
+    "processor_type": "minecraft:capped",
+    "delegate": {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true",
+            "block": "minecraft:oak_planks"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:oak_planks"
+          },
+          "output_state": {
+            "Name": "minecraft:sculk"
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:oak_planks"
+          },
+          "output_state": {
+            "Name": "savw:dumb_etched_deepslate"
+          }
+        }
+      ]
+    },
+    "limit": 4
+  },
+  {
+    "processor_type": "minecraft:capped",
+    "delegate": {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:oak_planks"
+          },
+          "output_state": {
+            "Name": "minecraft:polished_deepslate"
+          }
+        }
+      ]
+    },
+    "limit": 3
+  },
+  {
+    "processor_type": "minecraft:capped",
+    "delegate": {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:deepslate_bricks",
+            "probability": 0.4
+          },
+          "output_state": {
+            "Name": "minecraft:cracked_deepslate_bricks"
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:deepslate_tiles",
+            "probability": 0.4
+          },
+          "output_state": {
+            "Name": "minecraft:cracked_deepslate_tiles"
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:deepslate_tiles",
+            "probability": 0.3
+          },
+          "output_state": {
+            "Name": "minecraft:deepslate_tile_slab"
+          }
+        }
+      ]
+    },
+    "limit": 20
+  },
+  {
+    "processor_type": "minecraft:capped",
+    "delegate": {
+      "processor_type": "minecraft:block_rot",
+      "integrity": 0.2,
+      "rottable_blocks": "polished_deepslate_stairs"
+    },
+    "limit": 1
+  },
+  {
+    "processor_type": "minecraft:capped",
+    "delegate": {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:polished_deepslate_stairs",
+            "probability": 0.15
+          },
+          "output_state": {
+            "Name": "minecraft:polished_deepslate_slab",
+            "Properties": {
+              "type": "top",
+              "waterlogged": "false"
+            }
+          }
+        }
+      ]
+    },
+    "limit": 1
+  },
+  {
+    "processor_type": "minecraft:capped",
+    "delegate": {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:deepslate_tiles",
+            "probability": 0.45
+          },
+          "output_state": {
+            "Name": "sculk"
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "minecraft:deepslate_bricks",
+            "probability": 0.4
+          },
+          "output_state": {
+            "Name": "minecraft:sculk"
+          }
+        }
+      ]
+    },
+    "limit": 14
+  },
+  {
+    "processor_type": "minecraft:rule",
+    "rules": [
+      {
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "input_predicate": {
+          "predicate_type": "minecraft:block_match",
+          "block": "minecraft:skeleton_skull"
+        },
+        "output_state": {
+          "Name": "minecraft:sculk_catalyst"
+        }
+      }
+    ]
+  }
+]

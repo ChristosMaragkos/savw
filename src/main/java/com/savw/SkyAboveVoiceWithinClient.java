@@ -21,11 +21,14 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.phys.Vec3;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.HashSet;
@@ -85,7 +88,7 @@ public class SkyAboveVoiceWithinClient implements ClientModInitializer {
     }
 
     /// # Yes, I'm aware this is a shitty way to handle this.
-    /// ### No, I don't care.
+    /// <small>I really, REALLY don't care, though.</small>
     private static void handleWordWallRemoved(WordWallRemovedPayload payload, ClientPlayNetworking.Context context) {
         LocalPlayer player = context.client().player;
         assert player != null;
@@ -96,6 +99,30 @@ public class SkyAboveVoiceWithinClient implements ClientModInitializer {
                 SoundSource.AMBIENT,
                 player.clientLevel.random
         ));
+    }
+
+    private static void handleWhirlwindSprint(WhirlwindSprintS2CPayload payload, ClientPlayNetworking.Context context) {
+        LocalPlayer player = context.client().player;
+        assert player != null;
+        Vec3 lookingDirection = player.getLookAngle().subtract(0, player.getLookAngle().y, 0);
+        double thrust = 5 + (2.5 * (payload.wordsUsed() - 1));
+        player.setSprinting(true);
+        player.setDeltaMovement(lookingDirection.scale(thrust));
+        player.setOnGround(true);
+    }
+
+    @SuppressWarnings("DataFlowIssue")
+    private static void handleShoutFailed(ShoutFailedS2CPayload payload, ClientPlayNetworking.Context context) {
+        LocalPlayer player = context.client().player;
+        assert player != null;
+
+        context.client().getSoundManager().play(new SimpleSoundInstance(SoundEvents.NOTE_BLOCK_BASS.value(),
+                SoundSource.MASTER, 1f, 0.8f, context.client().level.getRandom(), context.client().player.blockPosition()));
+        if (payload.fromCooldown()) {
+            context.client().player.displayClientMessage(Component.literal("Your Shout is on cooldown!"), true);
+        } else {
+            context.client().player.displayClientMessage(Component.literal("You have not unlocked any words for this Shout!"), true);
+        }
     }
 
     private static SoundEvent getRandomWordUnlockSound(ClientLevel level) {
@@ -147,6 +174,7 @@ public class SkyAboveVoiceWithinClient implements ClientModInitializer {
         ClientTickEvents.START_CLIENT_TICK.register(client -> {
             if (client.player != null) {
 
+
                 ClientPlayNetworking.send(new RequestCooldownSyncC2SPayload(client.player.getUUID()));
 
                 if (shoutKeybind.consumeClick()) {
@@ -159,11 +187,13 @@ public class SkyAboveVoiceWithinClient implements ClientModInitializer {
                 }
 
                 // --- SHOUT MECHANICS --- \\
-                if (clientPlayerData.shoutCooldown > 0) {
+                if (client.level == null) {
                     return;
                 }
 
-                if (shoutKeybind.isDown() && clientPlayerData.currentShout != DUMMY_INITIAL_SHOUT) {
+                if (shoutKeybind.isDown() && clientPlayerData.currentShout != DUMMY_INITIAL_SHOUT &&
+                        clientPlayerData.currentShout.getUnlockedWordsCount(clientPlayerData.unlockedWords) != 0
+                && clientPlayerData.shoutCooldown <= 0) {
 
 
                     if (!isShouting[0]) {
@@ -177,10 +207,6 @@ public class SkyAboveVoiceWithinClient implements ClientModInitializer {
 
                     AbstractShout currentShout = clientPlayerData.currentShout;
                     int unlockedWordsForShout = currentShout.getUnlockedWordsCount(clientPlayerData.unlockedWords);
-
-                    if (unlockedWordsForShout == 0 || client.level == null) {
-                        return;
-                    }
 
                     if (unlockedWordsForShout >= 1 && shoutActionTick[0] == 1) {
                         client.player.displayClientMessage(Component.literal(currentShout.getFirstWord().getName() + "..."), true);
@@ -251,6 +277,10 @@ public class SkyAboveVoiceWithinClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(SyncCooldownS2CPayload.COOLDOWN_SYNC_PAYLOAD_TYPE, SkyAboveVoiceWithinClient::handleTickCooldownSync);
 
         ClientPlayNetworking.registerGlobalReceiver(WordWallRemovedPayload.WORD_WALL_REMOVED_PAYLOAD_TYPE, SkyAboveVoiceWithinClient::handleWordWallRemoved);
+
+        ClientPlayNetworking.registerGlobalReceiver(WhirlwindSprintS2CPayload.WHIRLWIND_SPRINT_PAYLOAD_TYPE, SkyAboveVoiceWithinClient::handleWhirlwindSprint);
+
+        ClientPlayNetworking.registerGlobalReceiver(ShoutFailedS2CPayload.SHOUT_FAILED_PAYLOAD_TYPE, SkyAboveVoiceWithinClient::handleShoutFailed);
 
     }
 
