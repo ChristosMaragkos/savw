@@ -5,9 +5,9 @@
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "savw:nether_word_wall",
+        "location": "savw:overworld_word_wall_aboveground",
         "projection": "rigid",
-        "processors": "savw:nether_base_wall"
+        "processors": "savw:overworld_base_wall"
       }
     }
   ]

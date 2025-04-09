@@ -9,6 +9,7 @@ import com.savw.entity.projectile.DrainingShockwave;
 import com.savw.entity.projectile.FireShockwave;
 import com.savw.entity.projectile.ForceShockwave;
 import com.savw.entity.projectile.FrostShockwave;
+import com.savw.loot_table.SAVWLootTables;
 import com.savw.networking.*;
 import com.savw.registry.SkyAboveVoiceWithinRegistries;
 import com.savw.shout.Shouts;
@@ -100,6 +101,7 @@ public class SkyAboveVoiceWithin implements ModInitializer {
 		Shouts.initialize();
 		SkyAboveVoiceWithinSounds.initialize();
 		SkyAboveVoiceWithinCommands.initialize();
+		SAVWLootTables.initialize();
 
 		LOGGER.info("Sky Above, Voice Within mod initialized!");
 

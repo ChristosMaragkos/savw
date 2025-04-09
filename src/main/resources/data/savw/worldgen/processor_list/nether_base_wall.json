@@ -1,0 +1,105 @@
+[
+  {
+    "processor_type": "minecraft:capped",
+    "delegate": {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:warped_planks"
+          },
+          "output_state": {
+            "Name": "savw:smart_etched_blackstone"
+          }
+        }
+      ]
+    },
+    "limit": 1
+  },
+  {
+    "processor_type": "minecraft:capped",
+    "delegate": {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:warped_planks"
+          },
+          "output_state": {
+            "Name": "savw:dumb_etched_blackstone"
+          }
+        }
+      ]
+    },
+    "limit": 3
+  },
+  {
+    "processor_type": "minecraft:capped",
+    "delegate": {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:block_match",
+            "block": "minecraft:warped_planks"
+          },
+          "output_state": {
+            "Name": "minecraft:polished_blackstone"
+          }
+        }
+      ]
+    },
+    "limit": 4
+  },
+  {
+    "processor_type": "minecraft:block_rot",
+    "integrity": 0.675,
+    "rottable_blocks": "minecraft:nether_brick_stairs"
+  },
+  {
+    "processor_type": "minecraft:capped",
+    "delegate": {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "nether_bricks",
+            "probability": 0.5
+          },
+          "output_state": {
+            "Name": "nether_brick_slab"
+          }
+        },
+        {
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "input_predicate": {
+            "predicate_type": "minecraft:random_block_match",
+            "block": "nether_bricks",
+            "probability": 0.65
+          },
+          "output_state": {
+            "Name": "minecraft:nether_brick_stairs"
+          }
+        }
+      ]
+    },
+    "limit": 28
+  }
+]

@@ -16,7 +16,7 @@
     }
   },
   "terrain_adaptation": "beard_thin",
-  "start_pool": "savw:overworld_word_walls",
+  "start_pool": "savw:overworld_wall_above",
   "size": 1,
   "start_height": {
     "absolute": 0

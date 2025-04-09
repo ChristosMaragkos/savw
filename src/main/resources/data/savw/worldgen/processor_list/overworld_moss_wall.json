@@ -117,7 +117,7 @@
       "integrity": 0.2,
       "rottable_blocks": "polished_deepslate_stairs"
     },
-    "limit": 1
+    "limit": 2
   },
   {
     "processor_type": "minecraft:capped",
@@ -157,7 +157,7 @@
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
             "block": "minecraft:deepslate_tiles",
-            "probability": 0.3
+            "probability": 0.55
           },
           "output_state": {
             "Name": "minecraft:moss_block"
@@ -170,56 +170,61 @@
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
             "block": "minecraft:deepslate_bricks",
-            "probability": 0.3
+            "probability": 0.5
           },
           "output_state": {
             "Name": "minecraft:moss_block"
           }
         },
         {
-          "position_predicate": {
-            "predicate_type": "minecraft:axis_aligned_linear_pos",
-            "axis": "y",
-            "min_dist": 0,
-            "max_dist": 2,
-            "min_chance": 1,
-            "max_chance": 1
-          },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:polished_deepslate_slab",
-            "probability": 0.3
+            "block": "minecraft:deepslate_brick_stairs",
+            "probability": 0.5
           },
           "output_state": {
-            "Name": "minecraft:moss_carpet"
+            "Name": "minecraft:moss_block"
           }
         },
         {
-          "position_predicate": {
-            "predicate_type": "minecraft:axis_aligned_linear_pos",
-            "axis": "y",
-            "min_dist": 0,
-            "max_dist": 1,
-            "min_chance": 1,
-            "max_chance": 1
-          },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
-            "block": "minecraft:deepslate_tile_slab",
-            "probability": 0.3
+            "block": "minecraft:deepslate_brick_slab",
+            "probability": 0.4
           },
           "output_state": {
-            "Name": "minecraft:moss_carpet"
+            "Name": "minecraft:moss_block"
           }
         }
       ]
     },
-    "limit": 20
+    "limit": 26
+  },
+  {
+    "processor_type": "minecraft:rule",
+    "rules": [
+      {
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "input_predicate": {
+          "predicate_type": "minecraft:block_match",
+          "block": "minecraft:decorated_pot"
+        },
+        "output_state": {
+          "Name": "minecraft:decorated_pot"
+        },
+        "block_entity_modifier": {
+          "type": "minecraft:append_loot",
+          "loot_table": "savw:pots/word_wall"
+        }
+      }
+    ]
   }
 ]

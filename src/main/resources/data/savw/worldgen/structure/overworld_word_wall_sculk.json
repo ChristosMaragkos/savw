@@ -16,7 +16,7 @@
     }
   },
   "terrain_adaptation": "beard_thin",
-  "start_pool": "savw:overworld_word_walls",
+  "start_pool": "savw:overworld_wall_below_sculk",
   "size": 1,
   "start_height": {
     "type": "uniform",

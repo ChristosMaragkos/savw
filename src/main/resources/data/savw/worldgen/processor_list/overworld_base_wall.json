@@ -100,7 +100,7 @@
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
             "block": "minecraft:deepslate_tiles",
-            "probability": 0.3
+            "probability": 0.4
           },
           "output_state": {
             "Name": "minecraft:deepslate_tile_slab"
@@ -131,7 +131,7 @@
           "input_predicate": {
             "predicate_type": "minecraft:random_block_match",
             "block": "minecraft:polished_deepslate_stairs",
-            "probability": 0.15
+            "probability": 0.2
           },
           "output_state": {
             "Name": "minecraft:polished_deepslate_slab",
@@ -144,5 +144,26 @@
       ]
     },
     "limit": 1
+  },
+  {
+    "processor_type": "minecraft:rule",
+    "rules": [
+      {
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "input_predicate": {
+          "predicate_type": "minecraft:block_match",
+          "block": "minecraft:decorated_pot"
+        },
+        "output_state": {
+          "Name": "minecraft:decorated_pot"
+        },
+        "block_entity_modifier": {
+          "type": "minecraft:append_loot",
+          "loot_table": "savw:pots/word_wall"
+        }
+      }
+    ]
   }
 ]

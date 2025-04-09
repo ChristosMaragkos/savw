@@ -1,13 +1,13 @@
 {
-  "fallback": "minecraft:empty",
+  "fallback": "savw:overworld_wall_above",
   "elements": [
     {
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "savw:nether_word_wall",
+        "location": "savw:overworld_word_wall_sculk",
         "projection": "rigid",
-        "processors": "savw:nether_base_wall"
+        "processors": "savw:overworld_sculk_wall"
       }
     }
   ]
