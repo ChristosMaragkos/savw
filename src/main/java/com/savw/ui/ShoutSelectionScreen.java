@@ -30,7 +30,9 @@ public class ShoutSelectionScreen extends BaseOwoScreen<GridLayout> {
     public ShoutSelectionScreen(int pageNumber) {
         super();
         this.pageNumber = pageNumber;
-        // Each page contains 9 shouts, so we calculate the start and end index based on the page number.
+        // Each page contains 9 shouts,
+        // so we calculate the start and end index
+        // based on the page number.
         this.startIndex = (pageNumber - 1) * 9;
         this.endIndex = Math.min(pageNumber * 9, ALL_SHOUTS.size());
     }
@@ -56,7 +58,7 @@ public class ShoutSelectionScreen extends BaseOwoScreen<GridLayout> {
         rootComponent.child(Components.button(Component.literal("x").withStyle(ChatFormatting.BOLD), xButton ->
                 Minecraft.getInstance().setScreen(null)).tooltip(Component.literal("Close")), 0, 4);
 
-        if (page() < 2) {
+        if (endIndex() < ALL_SHOUTS.size()) {
             rootComponent.child(CustomUiComponents.arrowButton(this, false), 1, 4);
         }
 
