@@ -3,6 +3,7 @@ package com.savw.shout;
 import com.savw.word.ShoutWord;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -24,8 +25,8 @@ public final class StormCallShout extends AbstractShout {
     StormCallHandler stormCallHandler;
 
     private StormCallShout(String name, String description,
-                           ShoutWord firstWord, ShoutWord secondWord, ShoutWord thirdWord, ResourceLocation iconLocation) {
-        super(name, description, firstWord, secondWord, thirdWord, iconLocation);
+                           ShoutWord firstWord, ShoutWord secondWord, ShoutWord thirdWord, ResourceLocation iconLocation, ResourceKey<Level> dimension) {
+        super(name, description, firstWord, secondWord, thirdWord, iconLocation, dimension);
         stormCallHandler = null;
     }
 

@@ -10,8 +10,8 @@ import java.util.List;
 import static com.savw.SkyAboveVoiceWithin.withModId;
 import static com.savw.registry.SkyAboveVoiceWithinRegistries.SHOUTS;
 import static com.savw.word.Words.*;
+import static net.minecraft.world.level.Level.*;
 
-@SuppressWarnings("unused")
 public final class Shouts {
 
     /// Dummy Shout to avoid null pointer exceptions when registering new PlayerData.
@@ -19,11 +19,12 @@ public final class Shouts {
     public static final DummyInitialShout DUMMY_INITIAL_SHOUT = registerShout(AbstractShout.createShout(
             DummyInitialShout.class,
             "Dummy Initial Shout",
-            "No Shout Selected!",
+            "null",
             DummyWord1,
             DummyWord2,
             DummyWord3,
-            null
+            null,
+            OVERWORLD
     ));
 
     public static final UnrelentingForceShout UNRELENTING_FORCE = registerShout(AbstractShout.createShout(
@@ -33,7 +34,8 @@ public final class Shouts {
             Fus,
             Ro,
             Dah,
-            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/unrelenting_force.png")
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/unrelenting_force.png"),
+            OVERWORLD
     ));
 
     public static final FireBreathShout FIRE_BREATH = registerShout(AbstractShout.createShout(
@@ -43,7 +45,8 @@ public final class Shouts {
             Yol,
             Toor,
             Shul,
-            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png"),
+            NETHER
     ));
 
     public static final BecomeEtherealShout BECOME_ETHEREAL = registerShout(AbstractShout.createShout(
@@ -53,7 +56,8 @@ public final class Shouts {
             Feim,
             Zii,
             Gron,
-            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png"),
+            END
     ));
 
     public static final FrostBreathShout FROST_BREATH = registerShout(AbstractShout.createShout(
@@ -63,7 +67,8 @@ public final class Shouts {
             Fo,
             Krah,
             Diin,
-            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png"),
+            OVERWORLD
     ));
 
     public static final StormCallShout STORM_CALL = registerShout(AbstractShout.createShout(
@@ -73,7 +78,8 @@ public final class Shouts {
             Strun,
             Bah,
             Qo,
-            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png"),
+            OVERWORLD
     ));
 
     public static final ClearSkiesShout CLEAR_SKIES = registerShout(AbstractShout.createShout(
@@ -83,7 +89,8 @@ public final class Shouts {
             Lok,
             Vah,
             Koor,
-            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png"),
+            OVERWORLD
     ));
 
     public static final WhirlwindSprintShout WHIRLWIND_SPRINT = registerShout(AbstractShout.createShout(
@@ -93,7 +100,8 @@ public final class Shouts {
             Wuld,
             Nah,
             Kest,
-            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png"),
+            OVERWORLD
     ));
 
     public static final DrainVitalityShout DRAIN_VITALITY = registerShout(AbstractShout.createShout(
@@ -103,22 +111,38 @@ public final class Shouts {
             Gaan,
             Lah,
             Haas,
-            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png")
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png"),
+            NETHER
     ));
 
     public static void initialize() {
+
         SkyAboveVoiceWithin.LOGGER.info("Shouts initialized!");
     }
 
-    public static final List<AbstractShout> ALL_SHOUTS = SHOUTS.stream().map(shout -> {
-        if (shout == DUMMY_INITIAL_SHOUT) {
-            return null;
-        }
-        return shout;
-    }).toList();
+    public static final List<AbstractShout> ALL_SHOUTS = List.of(
+            UNRELENTING_FORCE,
+            FIRE_BREATH,
+            BECOME_ETHEREAL,
+            FROST_BREATH,
+            STORM_CALL,
+            CLEAR_SKIES,
+            WHIRLWIND_SPRINT,
+            DRAIN_VITALITY
+    );
 
 
-    public static final List<AbstractShout> ALL_SHOUTS_FOR_CODEC = SHOUTS.stream().toList();
+    public static final List<AbstractShout> ALL_SHOUTS_FOR_CODEC = List.of(
+            UNRELENTING_FORCE,
+            FIRE_BREATH,
+            BECOME_ETHEREAL,
+            FROST_BREATH,
+            STORM_CALL,
+            CLEAR_SKIES,
+            WHIRLWIND_SPRINT,
+            DRAIN_VITALITY,
+            DUMMY_INITIAL_SHOUT
+    );
 
     public static AbstractShout getRandomShout(Level level) {
         return ALL_SHOUTS.get(level.random.nextIntBetweenInclusive(0, ALL_SHOUTS.size() - 1));

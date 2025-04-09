@@ -9,6 +9,8 @@ import com.savw.shout.Shouts;
 import com.savw.sound.SkyAboveVoiceWithinSounds;
 import com.savw.sound.WordWallLoopingSoundInstance;
 import com.savw.word.ShoutWord;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -24,6 +26,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -56,7 +59,6 @@ public class WordWallBlockEntity extends BlockEntity implements TickableBlockEnt
     private final int INITIAL_UNLOCK_TICKS = 140;
     private int ticksUntilUnlock = INITIAL_UNLOCK_TICKS;
     @Nullable public Player closestPlayer;
-    public WordWallLoopingSoundInstance wordWallLoopingSoundInstance;
 
     @Override
     public void tick() {
@@ -68,18 +70,7 @@ public class WordWallBlockEntity extends BlockEntity implements TickableBlockEnt
                 5, false);
 
         if (level.isClientSide()) {
-            Minecraft client = Minecraft.getInstance();
-            assert client.level != null;
-            if (client.getSoundManager().isActive(wordWallLoopingSoundInstance)) {
-                return;
-            } else if (closestPlayer != null) {
-                wordWallLoopingSoundInstance = new WordWallLoopingSoundInstance(this,
-                        SkyAboveVoiceWithinSounds.WORD_WALL_PASSIVE,
-                        SoundSource.AMBIENT,
-                        client.level.random);
-                client.getSoundManager().play(wordWallLoopingSoundInstance);
-                return;
-            } else client.getSoundManager().stop(wordWallLoopingSoundInstance);
+            if (tryPlaySound(level, this)) return;
         }
 
         trySpawnParticles(closestPlayer);
@@ -91,6 +82,25 @@ public class WordWallBlockEntity extends BlockEntity implements TickableBlockEnt
         }
 
     }
+
+    @Environment(EnvType.CLIENT)
+    public boolean tryPlaySound(Level level, WordWallBlockEntity wordWallBlockEntity) {
+        Minecraft client = Minecraft.getInstance();
+        assert client.level != null;
+        if (client.getSoundManager().isActive(wordWallLoopingSoundInstance)) {
+            return true;
+        } else if (client.player != null && level.isClientSide()) {
+            wordWallLoopingSoundInstance = new WordWallLoopingSoundInstance(wordWallBlockEntity,
+                    SkyAboveVoiceWithinSounds.WORD_WALL_PASSIVE,
+                    SoundSource.AMBIENT,
+                    client.level.random);
+            client.getSoundManager().play(wordWallLoopingSoundInstance);
+            return true;
+        } else client.getSoundManager().stop(wordWallLoopingSoundInstance);
+        return false;
+    }
+
+    @Environment(EnvType.CLIENT) public WordWallLoopingSoundInstance wordWallLoopingSoundInstance;
 
     private void wordUnlockTick(ServerPlayer serverPlayer) {
         serverPlayer.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 30, 1, false, false));
@@ -135,11 +145,13 @@ public class WordWallBlockEntity extends BlockEntity implements TickableBlockEnt
     }
 
     private void tryUnlockWord(ServerPlayer serverPlayer, PlayerData playerState) {
-        if (!new HashSet<>(playerState.unlockedWords).containsAll(ALL_WORDS)) {
+        if (!new HashSet<>(playerState.unlockedWords).containsAll(ALL_WORDS) && level != null) {
             ShoutWord wordToUnlock = null;
             AbstractShout shoutOfWord = null;
             while (wordToUnlock == null || playerState.unlockedWords.contains(wordToUnlock)) {
-                shoutOfWord = Shouts.getRandomShout(Objects.requireNonNull(level));
+                while (shoutOfWord == null || this.level.dimension() != shoutOfWord.dimension()) {
+                    shoutOfWord = Shouts.getRandomShout(level);
+                }
                 wordToUnlock = shoutOfWord.tryUnlockWord(playerState.unlockedWords);
             }
             playerState.unlockedWords.add(wordToUnlock);

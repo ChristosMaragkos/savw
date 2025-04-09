@@ -1,11 +1,14 @@
 package com.savw.sound;
 
 import com.savw.block.blocks.WordWallBlockEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 
+@Environment(EnvType.CLIENT)
 public class WordWallLoopingSoundInstance extends AbstractTickableSoundInstance {
 
     private final WordWallBlockEntity wordWallBlockEntity;

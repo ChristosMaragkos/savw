@@ -18,7 +18,6 @@ import static net.minecraft.world.effect.MobEffects.*;
 
 public class DrainingShockwave extends AbstractShockwaveProjectile{
 
-    //todo add entity renderer and shout for this
     public DrainingShockwave(ServerLevel level, LivingEntity owner, int wordsUsedToSummon) {
         super(DRAINING_SHOCKWAVE, level, owner, (2f * wordsUsedToSummon)/(1f + wordsUsedToSummon), wordsUsedToSummon, true);
     }
@@ -39,41 +38,41 @@ public class DrainingShockwave extends AbstractShockwaveProjectile{
         switch (getWordsUsedToSummon()) {
             case 1 -> {
                 if (getOwner() instanceof ServerPlayer serverPlayer) {
-                    target.addEffect(new MobEffectInstance(MOVEMENT_SLOWDOWN, 80, 1, false, false));
-                    target.addEffect(new MobEffectInstance(DIG_SLOWDOWN, 80, 1, false, false));
-                    target.addEffect(new MobEffectInstance(STAMINA_DRAINED, 80, 1, false, true));
+                    target.addEffect(new MobEffectInstance(MOVEMENT_SLOWDOWN, 80, 0, false, false));
+                    target.addEffect(new MobEffectInstance(DIG_SLOWDOWN, 80, 0, false, false));
+                    target.addEffect(new MobEffectInstance(STAMINA_DRAINED, 80, 0, false, true));
 
-                    serverPlayer.addEffect(new MobEffectInstance(MOVEMENT_SPEED, 80, 1, false, false));
-                    serverPlayer.addEffect(new MobEffectInstance(DIG_SPEED, 80, 1, false, false));
-                    serverPlayer.addEffect(new MobEffectInstance(STAMINA_REPLENISHED, 80, 1, false, true));
+                    serverPlayer.addEffect(new MobEffectInstance(MOVEMENT_SPEED, 80, 0, false, false));
+                    serverPlayer.addEffect(new MobEffectInstance(DIG_SPEED, 80, 0, false, false));
+                    serverPlayer.addEffect(new MobEffectInstance(STAMINA_REPLENISHED, 80, 0, false, true));
                 }
             }
             case 2 -> {
                 if (getOwner() instanceof ServerPlayer serverPlayer) {
-                    target.addEffect(new MobEffectInstance(MOVEMENT_SLOWDOWN, 120, 1, false, false));
-                    target.addEffect(new MobEffectInstance(DIG_SLOWDOWN, 120, 1, false, false));
-                    target.addEffect(new MobEffectInstance(STAMINA_DRAINED, 120, 2, false, true));
-                    target.addEffect(new MobEffectInstance(WEAKNESS, 120, 1, false, false));
+                    target.addEffect(new MobEffectInstance(MOVEMENT_SLOWDOWN, 120, 0, false, false));
+                    target.addEffect(new MobEffectInstance(DIG_SLOWDOWN, 120, 0, false, false));
+                    target.addEffect(new MobEffectInstance(STAMINA_DRAINED, 120, 1, false, true));
+                    target.addEffect(new MobEffectInstance(WEAKNESS, 120, 0, false, false));
 
-                    serverPlayer.addEffect(new MobEffectInstance(MOVEMENT_SPEED, 120, 1, false, false));
-                    serverPlayer.addEffect(new MobEffectInstance(DIG_SPEED, 120, 1, false, false));
-                    serverPlayer.addEffect(new MobEffectInstance(DAMAGE_BOOST, 120, 1, false, false));
-                    serverPlayer.addEffect(new MobEffectInstance(STAMINA_REPLENISHED, 120, 2, false, true));
+                    serverPlayer.addEffect(new MobEffectInstance(MOVEMENT_SPEED, 120, 0, false, false));
+                    serverPlayer.addEffect(new MobEffectInstance(DIG_SPEED, 120, 0, false, false));
+                    serverPlayer.addEffect(new MobEffectInstance(DAMAGE_BOOST, 120, 0, false, false));
+                    serverPlayer.addEffect(new MobEffectInstance(STAMINA_REPLENISHED, 120, 1, false, true));
                 }
             }
             case 3 -> {
                 if (getOwner() instanceof ServerPlayer serverPlayer) {
-                    target.addEffect(new MobEffectInstance(MOVEMENT_SLOWDOWN, 160, 1, false, false));
-                    target.addEffect(new MobEffectInstance(DIG_SLOWDOWN, 160, 1, false, false));
-                    target.addEffect(new MobEffectInstance(STAMINA_DRAINED, 160, 3, false, true));
-                    target.addEffect(new MobEffectInstance(WEAKNESS, 160, 1, false, false));
-                    target.addEffect(new MobEffectInstance(WITHER, 160, 2, false, false));
+                    target.addEffect(new MobEffectInstance(MOVEMENT_SLOWDOWN, 160, 0, false, false));
+                    target.addEffect(new MobEffectInstance(DIG_SLOWDOWN, 160, 0, false, false));
+                    target.addEffect(new MobEffectInstance(STAMINA_DRAINED, 160, 2, false, true));
+                    target.addEffect(new MobEffectInstance(WEAKNESS, 160, 0, false, false));
+                    target.addEffect(new MobEffectInstance(WITHER, 160, 0, false, false));
 
-                    serverPlayer.addEffect(new MobEffectInstance(MOVEMENT_SPEED, 160, 1, false, false));
-                    serverPlayer.addEffect(new MobEffectInstance(DIG_SPEED, 160, 1, false, false));
-                    serverPlayer.addEffect(new MobEffectInstance(DAMAGE_BOOST, 160, 1, false, false));
+                    serverPlayer.addEffect(new MobEffectInstance(MOVEMENT_SPEED, 160, 0, false, false));
+                    serverPlayer.addEffect(new MobEffectInstance(DIG_SPEED, 160, 0, false, false));
+                    serverPlayer.addEffect(new MobEffectInstance(DAMAGE_BOOST, 160, 0, false, false));
                     serverPlayer.addEffect(new MobEffectInstance(REGENERATION, 160, 1, false, true));
-                    serverPlayer.addEffect(new MobEffectInstance(STAMINA_REPLENISHED, 160, 3, false, true));
+                    serverPlayer.addEffect(new MobEffectInstance(STAMINA_REPLENISHED, 160, 1, false, true));
                 }
             }
         }

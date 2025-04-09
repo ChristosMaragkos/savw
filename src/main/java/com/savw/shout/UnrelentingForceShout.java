@@ -2,6 +2,7 @@ package com.savw.shout;
 
 import com.savw.entity.projectile.ForceShockwave;
 import com.savw.word.ShoutWord;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -17,8 +18,8 @@ import net.minecraft.world.level.Level;
 /// @see com.savw.word.Words#Dah
 public final class UnrelentingForceShout extends AbstractShout{
 
-    private UnrelentingForceShout(String name, String description, ShoutWord firstWord, ShoutWord secondWord, ShoutWord thirdWord, ResourceLocation iconLocation) {
-        super(name, description, firstWord, secondWord, thirdWord, iconLocation);
+    private UnrelentingForceShout(String name, String description, ShoutWord firstWord, ShoutWord secondWord, ShoutWord thirdWord, ResourceLocation iconLocation, ResourceKey<Level> dimension) {
+        super(name, description, firstWord, secondWord, thirdWord, iconLocation, dimension);
     }
 
     @Override

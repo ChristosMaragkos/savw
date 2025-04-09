@@ -3,6 +3,7 @@ package com.savw.shout;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.savw.word.ShoutWord;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -25,8 +26,11 @@ public abstract class AbstractShout {
     private final ShoutWord thirdWord;
     private final ResourceLocation iconLocation;
     private final ShoutWord[] allWords;
+    private final ResourceKey<Level> dimension;
 
-    protected AbstractShout(String name, String description, ShoutWord firstWord, ShoutWord secondWord, ShoutWord thirdWord, ResourceLocation iconLocation) {
+    protected AbstractShout(String name, String description,
+                            ShoutWord firstWord, ShoutWord secondWord, ShoutWord thirdWord,
+                            ResourceLocation iconLocation, ResourceKey<Level> dimension) {
         this.name = name;
         this.description = description;
         this.firstWord = firstWord;
@@ -34,6 +38,7 @@ public abstract class AbstractShout {
         this.thirdWord = thirdWord;
         this.iconLocation = iconLocation;
         this.allWords = new ShoutWord[]{firstWord, secondWord, thirdWord};
+        this.dimension = dimension;
     }
 
     /// ### createShout
@@ -47,15 +52,19 @@ public abstract class AbstractShout {
     /// @param thirdWord    the third word of the shout
     /// @param iconLocation the resource location of the shout's icon
     /// @param <S>          the type of the shout, a class that extends AbstractShout.
+    /// @param dimension    the dimension in which the shout is unlocked
     /// @return an instance of the specified shout subclass
-    public static <S extends AbstractShout> S createShout(Class<S> shoutClass, String name, String description, ShoutWord firstWord, ShoutWord secondWord, ShoutWord thirdWord, ResourceLocation iconLocation) {
+    public static <S extends AbstractShout> S createShout(Class<S> shoutClass, String name, String description,
+                                                          ShoutWord firstWord, ShoutWord secondWord, ShoutWord thirdWord,
+                                                          ResourceLocation iconLocation, ResourceKey<Level> dimension) {
         try {
-            Constructor<S> constructor = shoutClass.getDeclaredConstructor(String.class, String.class, ShoutWord.class, ShoutWord.class, ShoutWord.class, ResourceLocation.class);
+            Constructor<S> constructor = shoutClass.getDeclaredConstructor(String.class, String.class, ShoutWord.class, ShoutWord.class,
+                    ShoutWord.class, ResourceLocation.class, ResourceKey.class);
             constructor.setAccessible(true); // Allow access to private constructor
-            return constructor.newInstance(name, description, firstWord, secondWord, thirdWord, iconLocation);
+            return constructor.newInstance(name, description, firstWord, secondWord, thirdWord, iconLocation, dimension);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
                  InvocationTargetException e) {
-            throw new RuntimeException("Failed to create shoutToSwitchTo instance", e);
+            throw new RuntimeException("Failed to create shout instance", e);
         }
     }
 
@@ -85,6 +94,10 @@ public abstract class AbstractShout {
 
     public ShoutWord getThirdWord() {
         return this.thirdWord;
+    }
+
+    public ResourceKey<Level> dimension() {
+        return this.dimension;
     }
 
     public ShoutWord getSpecificWord(int index) {

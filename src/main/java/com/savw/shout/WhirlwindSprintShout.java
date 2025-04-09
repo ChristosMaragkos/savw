@@ -4,6 +4,7 @@ import com.savw.networking.WhirlwindSprintS2CPayload;
 import com.savw.word.ShoutWord;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,8 +16,9 @@ import net.minecraft.world.phys.Vec3;
 
 public final class WhirlwindSprintShout extends AbstractShout{
 
-    private WhirlwindSprintShout(String name, String description, ShoutWord firstWord, ShoutWord secondWord, ShoutWord thirdWord, ResourceLocation iconLocation) {
-        super(name, description, firstWord, secondWord, thirdWord, iconLocation);
+
+    private WhirlwindSprintShout(String name, String description, ShoutWord firstWord, ShoutWord secondWord, ShoutWord thirdWord, ResourceLocation iconLocation, ResourceKey<Level> dimension) {
+        super(name, description, firstWord, secondWord, thirdWord, iconLocation, dimension);
     }
 
     @Override
@@ -26,11 +28,6 @@ public final class WhirlwindSprintShout extends AbstractShout{
                     SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.0f, 1.0f);
             level.playSound(null, player.blockPosition(),
                     SoundEvents.WIND_CHARGE_BURST.value(), SoundSource.PLAYERS, 1.0f, 1.0f);
-//            if (level instanceof ServerLevel serverLevel) {
-//                serverLevel.sendParticles(ParticleTypes.POOF,
-//                        player.getX(), player.getY() + 0.5, player.getZ(),
-//                        10, serverLevel.random.nextFloat(), serverLevel.random.nextFloat(), serverLevel.random.nextFloat(), 0.1);
-//            }
             if (level instanceof ServerLevel serverLevel) {
                 Vec3[] bodyOffsets = {
                         new Vec3(0, 1.8, 0),  // Head
