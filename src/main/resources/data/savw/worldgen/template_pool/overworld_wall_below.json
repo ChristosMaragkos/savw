@@ -2,12 +2,30 @@
   "fallback": "savw:overworld_wall_above",
   "elements": [
     {
-      "weight": 1,
+      "weight": 6,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "location": "savw:overworld_word_wall",
         "projection": "rigid",
         "processors": "savw:overworld_base_wall"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "savw:overworld_word_wall",
+        "projection": "rigid",
+        "processors": "savw:overworld_moss_wall"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "savw:overworld_word_wall",
+        "projection": "rigid",
+        "processors": "savw:overworld_sculk_wall"
       }
     }
   ]
