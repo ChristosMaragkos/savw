@@ -10,7 +10,7 @@ import com.savw.networking.*;
 import com.savw.shout.AbstractShout;
 import com.savw.sound.SkyAboveVoiceWithinSounds;
 import com.savw.sound.UnlockWordMovingSoundInstance;
-import com.savw.ui.ShoutSelectionScreenPageOne;
+import com.savw.ui.ShoutSelectionScreen;
 import com.savw.word.ShoutWord;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -185,7 +185,7 @@ public class SkyAboveVoiceWithinClient implements ClientModInitializer {
 
                 if (toggleShoutMenuKeybind.consumeClick()) {
                     ClientPlayNetworking.send(new DemandShoutAndWordSyncPayload(client.player.getUUID()));
-                    client.setScreen(new ShoutSelectionScreenPageOne());
+                    client.setScreen(new ShoutSelectionScreen(1));
                 }
 
                 // --- SHOUT MECHANICS --- \\
