@@ -1,7 +1,6 @@
 package com.savw.shout;
 
 import com.savw.SkyAboveVoiceWithin;
-import com.savw.registry.SkyAboveVoiceWithinRegistries;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
@@ -9,8 +8,10 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 import static com.savw.SkyAboveVoiceWithin.withModId;
+import static com.savw.registry.SkyAboveVoiceWithinRegistries.SHOUTS;
 import static com.savw.word.Words.*;
 
+@SuppressWarnings("unused")
 public final class Shouts {
 
     /// Dummy Shout to avoid null pointer exceptions when registering new PlayerData.
@@ -107,31 +108,17 @@ public final class Shouts {
 
     public static void initialize() {
         SkyAboveVoiceWithin.LOGGER.info("Shouts initialized!");
-
     }
 
-    public static final List<AbstractShout> ALL_SHOUTS = List.of(
-            UNRELENTING_FORCE,
-            FIRE_BREATH,
-            FROST_BREATH,
-            BECOME_ETHEREAL,
-            STORM_CALL,
-            WHIRLWIND_SPRINT,
-            DRAIN_VITALITY,
-            CLEAR_SKIES
-    );
+    public static final List<AbstractShout> ALL_SHOUTS = SHOUTS.stream().map(shout -> {
+        if (shout == DUMMY_INITIAL_SHOUT) {
+            return null;
+        }
+        return shout;
+    }).toList();
 
-    public static final List<AbstractShout> ALL_SHOUTS_FOR_CODEC = List.of(
-            UNRELENTING_FORCE,
-            FIRE_BREATH,
-            FROST_BREATH,
-            BECOME_ETHEREAL,
-            STORM_CALL,
-            CLEAR_SKIES,
-            WHIRLWIND_SPRINT,
-            DRAIN_VITALITY,
-            DUMMY_INITIAL_SHOUT
-    );
+
+    public static final List<AbstractShout> ALL_SHOUTS_FOR_CODEC = SHOUTS.stream().toList();
 
     public static AbstractShout getRandomShout(Level level) {
         return ALL_SHOUTS.get(level.random.nextIntBetweenInclusive(0, ALL_SHOUTS.size() - 1));
@@ -151,7 +138,7 @@ public final class Shouts {
     }
 
     private static <S extends AbstractShout> S registerShout(S shout){
-        return Registry.register(SkyAboveVoiceWithinRegistries.SHOUTS,
+        return Registry.register(SHOUTS,
                 withModId(shout.getName().toLowerCase().replaceAll(" ", "_")),
                 shout
         );
