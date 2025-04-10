@@ -34,7 +34,7 @@ public class DrainingShockwave extends AbstractShockwaveProjectile{
     @Override
     protected void applyShockwaveEffect(LivingEntity target, ServerLevel serverLevel) {
         serverLevel.playSound(null, target.getX(), target.getY(), target.getZ(),
-                SoundEvents.WITHER_SPAWN, target.getSoundSource(), 0.7f, 0.8f);
+                SoundEvents.ZOMBIE_VILLAGER_CURE, target.getSoundSource(), 0.7f, 0.75f);
         switch (getWordsUsedToSummon()) {
             case 1 -> {
                 if (getOwner() instanceof ServerPlayer serverPlayer) {

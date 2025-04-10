@@ -5,10 +5,7 @@ import com.savw.block.SkyAboveVoiceWithinBlocks;
 import com.savw.block.blocks.SkyAboveVoiceWithinBlockEntityTypes;
 import com.savw.command.SkyAboveVoiceWithinCommands;
 import com.savw.effect.SkyAboveVoiceWithinMobEffects;
-import com.savw.entity.projectile.DrainingShockwave;
-import com.savw.entity.projectile.FireShockwave;
-import com.savw.entity.projectile.ForceShockwave;
-import com.savw.entity.projectile.FrostShockwave;
+import com.savw.entity.projectile.*;
 import com.savw.loot_table.SAVWLootTables;
 import com.savw.networking.*;
 import com.savw.registry.SkyAboveVoiceWithinRegistries;
@@ -85,6 +82,19 @@ public class SkyAboveVoiceWithin implements ModInitializer {
 					.build(ResourceKey.create(
 							Registries.ENTITY_TYPE,
 							ResourceLocation.fromNamespaceAndPath(MOD_ID, "draining_shockwave")
+					))
+	);
+
+	public static final EntityType<DeathShockwave> DEATH_SHOCKWAVE = Registry.register(
+			BuiltInRegistries.ENTITY_TYPE,
+			withModId("death_shockwave"),
+			EntityType.Builder.<DeathShockwave>of(DeathShockwave::new, MobCategory.MISC)
+					.sized(1.0f, 1.0f)
+					.updateInterval(10)
+					.alwaysUpdateVelocity(true)
+					.build(ResourceKey.create(
+							Registries.ENTITY_TYPE,
+							ResourceLocation.fromNamespaceAndPath(MOD_ID, "death_shockwave")
 					))
 	);
 

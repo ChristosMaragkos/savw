@@ -115,6 +115,17 @@ public final class Shouts {
             NETHER
     ));
 
+    public static final MarkedForDeathShout MARKED_FOR_DEATH = registerShout(AbstractShout.createShout(
+            MarkedForDeathShout.class,
+            "Marked for Death",
+            "Speak, and let your Voice herald doom, \nas an opponent's armor and lifeforce are weakened.",
+            Krii,
+            Lun,
+            Aus,
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png"),
+            END
+    ));
+
     public static void initialize() {
 
         SkyAboveVoiceWithin.LOGGER.info("Shouts initialized!");
@@ -128,7 +139,8 @@ public final class Shouts {
             STORM_CALL,
             CLEAR_SKIES,
             WHIRLWIND_SPRINT,
-            DRAIN_VITALITY
+            DRAIN_VITALITY,
+            MARKED_FOR_DEATH
     );
 
 
@@ -141,6 +153,7 @@ public final class Shouts {
             CLEAR_SKIES,
             WHIRLWIND_SPRINT,
             DRAIN_VITALITY,
+            MARKED_FOR_DEATH,
             DUMMY_INITIAL_SHOUT
     );
 

@@ -20,5 +20,6 @@
   "effect.savw.ethereal": "Etherealness",
   "effect.savw.shout_cooldown": "Shout Cooldown",
   "effect.savw.stamina_replenished": "Stamina Regen",
-  "effect.savw.stamina_drained": "Stamina Drain"
+  "effect.savw.stamina_drained": "Stamina Drain",
+  "effect.savw.marked_for_death": "Marked for Death"
 }

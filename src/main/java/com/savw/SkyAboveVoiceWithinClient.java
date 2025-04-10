@@ -1,6 +1,7 @@
 package com.savw;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.savw.entity.projectile.death.DeathShockwaveRenderer;
 import com.savw.entity.projectile.drain.DrainingShockwaveRenderer;
 import com.savw.entity.projectile.fire.FireShockwaveRenderer;
 import com.savw.entity.projectile.force.ForceShockwaveModel;
@@ -150,6 +151,7 @@ public class SkyAboveVoiceWithinClient implements ClientModInitializer {
         EntityRendererRegistry.register(FIRE_SHOCKWAVE, FireShockwaveRenderer::new);
         EntityRendererRegistry.register(FROST_SHOCKWAVE, FrostShockwaveRenderer::new);
         EntityRendererRegistry.register(DRAINING_SHOCKWAVE, DrainingShockwaveRenderer::new);
+        EntityRendererRegistry.register(DEATH_SHOCKWAVE, DeathShockwaveRenderer::new);
 
         @SuppressWarnings("NoTranslation") KeyMapping shoutKeybind = KeyBindingHelper.registerKeyBinding(
                 new KeyMapping(

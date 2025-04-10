@@ -57,8 +57,6 @@ public final class SkyAboveVoiceWithinNetworking {
             if (entity instanceof ServerPlayer serverPlayer) {
                 PlayerData playerState = StateSaverAndLoader.getPlayerState(serverPlayer);
 
-                SkyAboveVoiceWithin.LOGGER.warn("Using shout: {}", playerState.currentShout != null ? playerState.currentShout.getName() : "null");
-
                 if (playerState.currentShout != null) {
                     playerState.currentShout.useShout(serverPlayer, serverPlayer.level(), useShoutC2SPayload.wordsUsed());
                     // Set the cooldown to the cooldown of the last word used, converted to ticks.
