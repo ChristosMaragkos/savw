@@ -4,6 +4,7 @@ import com.savw.SkyAboveVoiceWithin;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -168,7 +169,7 @@ public final class Shouts {
                 .orElseThrow(() -> new IllegalStateException("Unknown Shout: " + name));
     }
 
-    public static AbstractShout getByNameToEncode(String name) {
+    public static AbstractShout getByNameToEncode(@NotNull String name) {
         return ALL_SHOUTS_FOR_CODEC.stream().filter(shout -> shout.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("Unknown Shout: " + name));

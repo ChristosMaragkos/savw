@@ -36,9 +36,12 @@ public class DeathShockwave extends AbstractShockwaveProjectile{
     }
 
     /// I'm actually pretty proud of this one.
-    /// Since I couldn't get {@link com.savw.effect.MarkedForDeathMobEffect the Marked For Death effect} to dynamically decrease attributes,
-    /// I depended upon my trusty STDLib to append the same tick task to itself with an increasing delay using a for loop.
-    /// The tick task then applies the effect to the target with a linearly increasing amplifier, simulating the effect getting worse.
+    ///
+    /// Since I couldn't get {@link com.savw.effect.MarkedForDeathMobEffect the Marked For Death effect}
+    /// to dynamically decrease attributes, I depended upon my trusty STDLib to append
+    /// the same tick task to itself with an increasing delay using a for loop.
+    /// The tick task then applies the effect to the target with a linearly increasing amplifier,
+    /// simulating the effect getting worse.
     ///
     /// Is this the best way to do this? Probably not.
     ///
@@ -74,4 +77,5 @@ public class DeathShockwave extends AbstractShockwaveProjectile{
             effectApplication.appendDelayedAfterEnd(effectApplication, actualDelay, ServerEvents.END_SERVER_TICK);
         }
     }
+
 }
