@@ -7,6 +7,7 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.renderer.RenderType;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public class DeathShockwaveModel extends EntityModel<DeathShockwaveRenderState> {
     protected DeathShockwaveModel(ModelPart root) {
         super(root, RenderType::entityTranslucent);
