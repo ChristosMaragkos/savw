@@ -5,14 +5,14 @@ import io.wispforest.owo.ui.base.BaseOwoScreen;
 import io.wispforest.owo.ui.component.Components;
 import io.wispforest.owo.ui.container.Containers;
 import io.wispforest.owo.ui.container.GridLayout;
-import io.wispforest.owo.ui.core.Insets;
-import io.wispforest.owo.ui.core.OwoUIAdapter;
-import io.wispforest.owo.ui.core.Surface;
+import io.wispforest.owo.ui.container.StackLayout;
+import io.wispforest.owo.ui.core.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 
+import static com.savw.SkyAboveVoiceWithin.withModId;
 import static com.savw.shout.Shouts.ALL_SHOUTS;
 
 public class ShoutSelectionScreen extends BaseOwoScreen<GridLayout> {
@@ -51,6 +51,11 @@ public class ShoutSelectionScreen extends BaseOwoScreen<GridLayout> {
 
     @Override
     protected void build(GridLayout rootComponent) {
+
+        StackLayout stackLayout = Containers.stack(
+                Sizing.content(), Sizing.content()
+                );
+
         rootComponent
                 .surface(Surface.VANILLA_TRANSLUCENT)
                 .padding(Insets.top(32).withLeft(16));
@@ -69,8 +74,19 @@ public class ShoutSelectionScreen extends BaseOwoScreen<GridLayout> {
         for (int i = startIndex(); i < endIndex(); i++) {
             AbstractShout shout = ALL_SHOUTS.get(i);
 
-            rootComponent.child(CustomUiComponents.clickableTexture(shout),
-                    (i - startIndex()) % 3, ((i - startIndex()) / 3) + 1);
+            ClickableTextureComponent component = CustomUiComponents.clickableTexture(shout);
+
+            if (component.isSelected) {
+                rootComponent.child(stackLayout, (i - startIndex()) % 3, ((i - startIndex()) / 3) + 1);
+                stackLayout.child(0, component);
+                stackLayout.child(1, Components.texture(withModId("textures/gui/sprites/selection_outline.png"), 0, 0,
+                        48, 48, 48, 48)
+                        .sizing(Sizing.fixed(50)).positioning(Positioning.relative(50, 50)));
+            } else {
+                rootComponent.child(component,
+                        (i - startIndex()) % 3, ((i - startIndex()) / 3) + 1);
+            }
+
         }
     }
 }

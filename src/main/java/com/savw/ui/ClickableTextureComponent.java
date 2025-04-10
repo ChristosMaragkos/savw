@@ -4,6 +4,7 @@ import com.savw.networking.ChangeShoutPayload;
 import com.savw.shout.AbstractShout;
 import com.savw.word.ShoutWord;
 import io.wispforest.owo.ui.component.TextureComponent;
+import io.wispforest.owo.ui.core.OwoUIDrawContext;
 import io.wispforest.owo.ui.core.Sizing;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
@@ -43,13 +44,13 @@ public class ClickableTextureComponent extends TextureComponent {
 
         if (button == 0 && client.level != null && client.player != null) {
 
-            clientPlayerData.currentShout = shout;
             int unlockedWordsCount = shout.getUnlockedWordsCount(clientPlayerData.unlockedWords);
             if (unlockedWordsCount == 0) {
                 client.getSoundManager().play(new SimpleSoundInstance(SoundEvents.NOTE_BLOCK_BASS.value(),
                         SoundSource.PLAYERS, 1f, 0.8f, client.level.getRandom(), client.player.blockPosition()));
                 return false;
             }
+            clientPlayerData.currentShout = shout;
             ClientPlayNetworking.send(new ChangeShoutPayload(clientPlayerData.currentShout));
             client.getSoundManager().play(new SimpleSoundInstance(SoundEvents.UI_BUTTON_CLICK.value(),
                     SoundSource.PLAYERS, 1f, 1f, client.level.getRandom(), client.player.blockPosition()));
@@ -66,5 +67,15 @@ public class ClickableTextureComponent extends TextureComponent {
     private String formatWord(ShoutWord word) {
         boolean unlocked = clientPlayerData.unlockedWords.contains(word);
         return "§" + getColorBasedOnUnlockedStatus(unlocked) + word.getName();
+    }
+
+    @Override
+    public void draw(OwoUIDrawContext context, int mouseX, int mouseY, float partialTicks, float delta) {
+        super.draw(context, mouseX, mouseY, partialTicks, delta);
+        if (hovered) {
+            context.drawRectOutline(this.x, this.y,
+                    this.width(), this.height(),
+                    0xFFFFFF00);
+        }
     }
 }

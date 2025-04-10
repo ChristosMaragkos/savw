@@ -66,7 +66,7 @@ public class SkyAboveVoiceWithinCommands {
                                         " for Shout " + shout.getName() + "!");
 
                                 unlockedWords.add(wordToUnlock);
-                                ServerPlayNetworking.send(player, new SendShoutAndWordSyncPayload(shout, unlockedWords));
+                                ServerPlayNetworking.send(player, new SendShoutAndWordSyncPayload(playerData.currentShout, unlockedWords));
                                 context.getSource().sendSuccess(componentSupplier, true);
                                 return 1;
                             })
@@ -104,7 +104,7 @@ public class SkyAboveVoiceWithinCommands {
                                             return 1;
                                         }
                                         unlockedWords.addAll(wordsToUnlock);
-                                        ServerPlayNetworking.send(player, new SendShoutAndWordSyncPayload(shout, unlockedWords));
+                                        ServerPlayNetworking.send(player, new SendShoutAndWordSyncPayload(playerData.currentShout, unlockedWords));
                                         Supplier<Component> componentSupplier = () -> Component.literal("Unlocked all words for Shout " + shout.getName() + "!");
                                         context.getSource().sendSuccess(componentSupplier, true);
                                         return 1;
