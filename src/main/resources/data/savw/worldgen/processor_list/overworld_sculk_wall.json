@@ -239,5 +239,183 @@
         }
       }
     ]
+  },
+  {
+    "processor_type": "minecraft:block_rot",
+    "integrity": 0.6,
+    "rottable_blocks": "vine"
+  },
+  {
+    "processor_type": "minecraft:rule",
+    "rules": [
+      {
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "input_predicate": {
+          "predicate_type": "minecraft:blockstate_match",
+          "block_state": {
+            "Name": "vine",
+            "Properties": {
+              "east": "true"
+            }
+          }
+        },
+        "output_state": {
+          "Name": "sculk_vein",
+          "Properties": {
+            "east": "true"
+          }
+        }
+      },
+      {
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "input_predicate": {
+          "predicate_type": "minecraft:blockstate_match",
+          "block_state": {
+            "Name": "vine",
+            "Properties": {
+              "north": "true"
+            }
+          }
+        },
+        "output_state": {
+          "Name": "sculk_vein",
+          "Properties": {
+            "north": "true"
+          }
+        }
+      },
+      {
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "input_predicate": {
+          "predicate_type": "minecraft:blockstate_match",
+          "block_state": {
+            "Name": "vine",
+            "Properties": {
+              "south": "true"
+            }
+          }
+        },
+        "output_state": {
+          "Name": "sculk_vein",
+          "Properties": {
+            "south": "true"
+          }
+        }
+      },
+      {
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "input_predicate": {
+          "predicate_type": "minecraft:blockstate_match",
+          "block_state": {
+            "Name": "vine",
+            "Properties": {
+              "west": "true"
+            }
+          }
+        },
+        "output_state": {
+          "Name": "sculk_vein",
+          "Properties": {
+            "west": "true"
+          }
+        }
+      },
+      {
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "input_predicate": {
+          "predicate_type": "minecraft:blockstate_match",
+          "block_state": {
+            "Name": "vine",
+            "Properties": {
+              "north": "true",
+              "west": "true"
+            }
+          }
+        },
+        "output_state": {
+          "Name": "sculk_vein",
+          "Properties": {
+            "north": "true",
+            "west": "true"
+          }
+        }
+      },
+      {
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "input_predicate": {
+          "predicate_type": "minecraft:blockstate_match",
+          "block_state": {
+            "Name": "vine",
+            "Properties": {
+              "north": "true",
+              "east": "true"
+            }
+          }
+        },
+        "output_state": {
+          "Name": "sculk_vein",
+          "Properties": {
+            "north": "true",
+            "east": "true"
+          }
+        }
+      },
+      {
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "input_predicate": {
+          "predicate_type": "minecraft:blockstate_match",
+          "block_state": {
+            "Name": "vine",
+            "Properties": {
+              "south": "true",
+              "west": "true"
+            }
+          }
+        },
+        "output_state": {
+          "Name": "sculk_vein",
+          "Properties": {
+            "south": "true",
+            "west": "true"
+          }
+        }
+      },
+      {
+        "location_predicate": {
+          "predicate_type": "minecraft:always_true"
+        },
+        "input_predicate": {
+          "predicate_type": "minecraft:blockstate_match",
+          "block_state": {
+            "Name": "vine",
+            "Properties": {
+              "south": "true",
+              "east": "true"
+            }
+          }
+        },
+        "output_state": {
+          "Name": "sculk_vein",
+          "Properties": {
+            "south": "true",
+            "east": "true"
+          }
+        }
+      }
+    ]
   }
 ]
