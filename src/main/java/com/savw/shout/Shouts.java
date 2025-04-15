@@ -1,6 +1,7 @@
 package com.savw.shout;
 
 import com.savw.SkyAboveVoiceWithin;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
@@ -127,36 +128,26 @@ public final class Shouts {
             END
     ));
 
+    /// Shout lists are now initialized when the
+    /// server starts and are derived dynamically from {@link com.savw.registry.SkyAboveVoiceWithinRegistries#SHOUTS the SHOUTS registry}.
+    /// This is done to avoid the need to manually update the lists.
+    /// This also finally allows other mods to add shouts of their own.
+    /// @since Lists have been present since 0.0.1, <br>but were not derived from the registry until 0.0.3.
+    public static List<AbstractShout> ALL_SHOUTS;
+    public static List<AbstractShout> ALL_SHOUTS_FOR_CODEC;
+
     public static void initialize() {
+        ServerLifecycleEvents.SERVER_STARTED.register(
+                server -> {
+                    ALL_SHOUTS = SHOUTS.stream().filter(shout -> shout != DUMMY_INITIAL_SHOUT)
+                            .toList();
+                    ALL_SHOUTS_FOR_CODEC = SHOUTS.stream().toList();
+                }
+        );
 
         SkyAboveVoiceWithin.LOGGER.info("Shouts initialized!");
     }
 
-    public static final List<AbstractShout> ALL_SHOUTS = List.of(
-            UNRELENTING_FORCE,
-            FIRE_BREATH,
-            BECOME_ETHEREAL,
-            FROST_BREATH,
-            STORM_CALL,
-            CLEAR_SKIES,
-            WHIRLWIND_SPRINT,
-            DRAIN_VITALITY,
-            MARKED_FOR_DEATH
-    );
-
-
-    public static final List<AbstractShout> ALL_SHOUTS_FOR_CODEC = List.of(
-            UNRELENTING_FORCE,
-            FIRE_BREATH,
-            BECOME_ETHEREAL,
-            FROST_BREATH,
-            STORM_CALL,
-            CLEAR_SKIES,
-            WHIRLWIND_SPRINT,
-            DRAIN_VITALITY,
-            MARKED_FOR_DEATH,
-            DUMMY_INITIAL_SHOUT
-    );
 
     public static AbstractShout getRandomShout(Level level) {
         return ALL_SHOUTS.get(level.random.nextIntBetweenInclusive(0, ALL_SHOUTS.size() - 1));

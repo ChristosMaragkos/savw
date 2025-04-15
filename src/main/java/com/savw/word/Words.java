@@ -1,12 +1,14 @@
 package com.savw.word;
 
 import com.savw.SkyAboveVoiceWithin;
-import com.savw.registry.SkyAboveVoiceWithinRegistries;
+import com.savw.shout.Shouts;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.core.Registry;
 
 import java.util.List;
 
 import static com.savw.SkyAboveVoiceWithin.withModId;
+import static com.savw.registry.SkyAboveVoiceWithinRegistries.WORDS;
 
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -73,39 +75,25 @@ public final class Words {
 
     public static final ShoutWord Aus = registerWord(ShoutWord.create("Aus", 60, 45, "Suffer"));
 
+    /// Word list is now also derived from the registry.
+    /// This is to avoid having to manually update the list when new words are added.
+    /// This also allows other mods to add words of their own.
+    /// @see Shouts#initialize()
+    public static List<ShoutWord> ALL_WORDS;
+
     public static void initialize() {
+
+        ServerLifecycleEvents.SERVER_STARTED.register(
+                server -> {
+                    ALL_WORDS = WORDS.stream().filter(word -> word != DummyWord1 && word != DummyWord2 && word != DummyWord3)
+                            .toList();
+                }
+        );
+
         SkyAboveVoiceWithin.LOGGER.info("Words initialized!");
     }
 
-    public static final List<ShoutWord> ALL_WORDS = List.of(
-            Fus,
-            Ro,
-            Dah,
-            Yol,
-            Toor,
-            Shul,
-            Feim,
-            Zii,
-            Gron,
-            Fo,
-            Krah,
-            Diin,
-            Strun,
-            Bah,
-            Qo,
-            Lok,
-            Vah,
-            Koor,
-            Wuld,
-            Nah,
-            Kest,
-            Gaan,
-            Lah,
-            Haas,
-            Krii,
-            Lun,
-            Aus
-    );
+
 
     public static ShoutWord getByName(String name) {
         return ALL_WORDS.stream()
@@ -115,7 +103,7 @@ public final class Words {
     }
 
     private static ShoutWord registerWord(ShoutWord word) {
-        return Registry.register(SkyAboveVoiceWithinRegistries.WORDS,
+        return Registry.register(WORDS,
                 withModId(word.getName().toLowerCase()),
                 word);
     }
