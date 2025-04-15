@@ -84,10 +84,9 @@ public final class Words {
     public static void initialize() {
 
         ServerLifecycleEvents.SERVER_STARTED.register(
-                server -> {
-                    ALL_WORDS = WORDS.stream().filter(word -> word != DummyWord1 && word != DummyWord2 && word != DummyWord3)
-                            .toList();
-                }
+                server -> ALL_WORDS = WORDS.stream().filter(word ->
+                                word != DummyWord1 && word != DummyWord2 && word != DummyWord3)
+                        .toList()
         );
 
         SkyAboveVoiceWithin.LOGGER.info("Words initialized!");

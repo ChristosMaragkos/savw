@@ -14,6 +14,7 @@ import static com.savw.registry.SkyAboveVoiceWithinRegistries.SHOUTS;
 import static com.savw.word.Words.*;
 import static net.minecraft.world.level.Level.*;
 
+@SuppressWarnings("unused")
 public final class Shouts {
 
     /// Dummy Shout to avoid null pointer exceptions when registering new PlayerData.
