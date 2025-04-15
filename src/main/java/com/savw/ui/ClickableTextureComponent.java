@@ -66,7 +66,7 @@ public class ClickableTextureComponent extends TextureComponent {
 
     private String formatWord(ShoutWord word) {
         boolean unlocked = clientPlayerData.unlockedWords.contains(word);
-        return "§" + getColorBasedOnUnlockedStatus(unlocked) + word.getName();
+        return "§" + getColorBasedOnUnlockedStatus(unlocked) + word.getName() + " - " + word.getMeaning() + ", " + word.getCooldown() + " seconds";
     }
 
     @Override

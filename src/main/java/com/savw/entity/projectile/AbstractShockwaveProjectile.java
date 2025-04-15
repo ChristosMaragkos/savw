@@ -14,6 +14,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
+import static com.savw.effect.SkyAboveVoiceWithinMobEffects.ETHEREAL;
+
 /// # AbstractShockwaveProjectile
 /// Represents the shockwave projectile used by most Shouts that act as ranged attacks.
 /// This class is responsible for the projectile's behavior, including its movement, collision detection,
@@ -104,7 +106,10 @@ public abstract class AbstractShockwaveProjectile extends AbstractHurtingProject
     protected void onHitEntity(EntityHitResult result) {
         Entity target = result.getEntity();
 
-        if (target instanceof LivingEntity livingEntity && target != this.getOwner() && this.level() instanceof ServerLevel serverLevel) {
+        if (target instanceof LivingEntity livingEntity
+                && target != this.getOwner()
+                && this.level() instanceof ServerLevel serverLevel
+        && !livingEntity.hasEffect(ETHEREAL)) {
             applyShockwaveEffect(livingEntity, serverLevel);
 
             if (shouldStopUponImpact()) {

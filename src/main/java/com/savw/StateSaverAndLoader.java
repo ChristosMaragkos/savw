@@ -75,7 +75,7 @@ public class StateSaverAndLoader extends SavedData {
                     .toList();
 
             playerData.currentShout = playersNbt.getCompound(key).getString("currentShout").isEmpty() ? null
-                    : Shouts.getByNameToEncode(playersNbt.getCompound(key).getString("currentShout"));
+                    : Shouts.getShoutByName(playersNbt.getCompound(key).getString("currentShout"));
 
             playerData.shoutCooldown = playersNbt.getCompound(key).getInt("shoutCooldown");
 

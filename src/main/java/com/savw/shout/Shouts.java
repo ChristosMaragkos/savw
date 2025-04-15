@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -19,7 +18,8 @@ public final class Shouts {
 
     /// Dummy Shout to avoid null pointer exceptions when registering new PlayerData.
     /// This is not a real shout, but it is used to avoid using null as an initial shout.
-    public static final DummyInitialShout DUMMY_INITIAL_SHOUT = registerShout(AbstractShout.createShout(
+    /// As such, it is not registered in the SHOUTS registry to avoid confusion.
+    public static final DummyInitialShout DUMMY_INITIAL_SHOUT = AbstractShout.createShout(
             DummyInitialShout.class,
             "Dummy Initial Shout",
             "null",
@@ -28,7 +28,7 @@ public final class Shouts {
             DummyWord3,
             null,
             OVERWORLD
-    ));
+    );
 
     public static final UnrelentingForceShout UNRELENTING_FORCE = registerShout(AbstractShout.createShout(
             UnrelentingForceShout.class,
@@ -129,23 +129,21 @@ public final class Shouts {
             END
     ));
 
-    /// Shout lists are now initialized when the
+    /// The shout list is initialized when the server starts.
     /// server starts and are derived dynamically from {@link com.savw.registry.SkyAboveVoiceWithinRegistries#SHOUTS the SHOUTS registry}.
     /// This is done to avoid the need to manually update the lists.
     /// This also finally allows other mods to add shouts of their own.
-    /// @since Lists have been present since 0.0.1, <br>but were not derived from the registry until 0.0.3.
+    /// @since Lists have been present since 0.0.1, but were not derived from the registry until 0.0.3.
+    /// @implNote ALL_SHOUTS_FOR_CODEC list was removed in 0.0.3 due to it being redundant.
+    /// I discovered a way to use {@link Shouts#DUMMY_INITIAL_SHOUT DUMMY_INITIAL_SHOUT} for its intended purposes
+    /// while removing any and all ways of referring to it
     public static List<AbstractShout> ALL_SHOUTS;
-    public static List<AbstractShout> ALL_SHOUTS_FOR_CODEC;
 
     public static void initialize() {
         ServerLifecycleEvents.SERVER_STARTED.register(
-                server -> {
-                    ALL_SHOUTS = SHOUTS.stream().filter(shout -> shout != DUMMY_INITIAL_SHOUT)
-                            .toList();
-                    ALL_SHOUTS_FOR_CODEC = SHOUTS.stream().toList();
-                }
+                server -> ALL_SHOUTS = SHOUTS.stream().filter(shout -> shout != DUMMY_INITIAL_SHOUT)
+                        .toList()
         );
-
         SkyAboveVoiceWithin.LOGGER.info("Shouts initialized!");
     }
 
@@ -154,19 +152,17 @@ public final class Shouts {
         return ALL_SHOUTS.get(level.random.nextIntBetweenInclusive(0, ALL_SHOUTS.size() - 1));
     }
 
-    @Deprecated(forRemoval = true)
-    public static AbstractShout getByName(String name) {
+    /// This method is no longer deprecated as of 0.0.3! With the overhaul of shout encoding,
+    /// getByNameToEncode(String name) was redundant and was removed, with all its usages replaced
+    /// with this method.
+    /// @since 0.0.1
+    public static AbstractShout getShoutByName(String name) {
         return ALL_SHOUTS.stream().filter(shout -> shout.getName().equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Unknown Shout: " + name));
+                .orElse(DUMMY_INITIAL_SHOUT);
     }
 
-    public static AbstractShout getByNameToEncode(@NotNull String name) {
-        return ALL_SHOUTS_FOR_CODEC.stream().filter(shout -> shout.getName().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Unknown Shout: " + name));
-    }
-
+    /// Will ***probably*** need to make this public if I am to allow other mods to add shouts.
     private static <S extends AbstractShout> S registerShout(S shout){
         return Registry.register(SHOUTS,
                 withModId(shout.getName().toLowerCase().replaceAll(" ", "_")),

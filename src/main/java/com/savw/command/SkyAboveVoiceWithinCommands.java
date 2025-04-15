@@ -16,6 +16,7 @@ import net.minecraft.server.level.ServerPlayer;
 import java.util.List;
 import java.util.function.Supplier;
 
+import static com.savw.effect.SkyAboveVoiceWithinMobEffects.SHOUT_COOLDOWN;
 import static com.savw.shout.Shouts.DUMMY_INITIAL_SHOUT;
 import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
@@ -24,7 +25,6 @@ public class SkyAboveVoiceWithinCommands {
 
     public static void initialize() {
 
-        //noinspection CodeBlock2Expr
         CommandRegistrationCallback.EVENT.register((dispatcher,
                                                     registryAccess,
                                                     environment) -> {
@@ -111,6 +111,25 @@ public class SkyAboveVoiceWithinCommands {
                                     }))
                     ));
 
+            dispatcher.register(literal("removeShoutCooldown")
+                    .executes(context -> {
+                        if (context.getSource().isPlayer() && context.getSource().getPlayer() != null) {
+                            PlayerData playerData = StateSaverAndLoader.getPlayerState(context.getSource().getPlayer());
+                            if (playerData.shoutCooldown > 2){
+                                playerData.shoutCooldown = 2;
+                                context.getSource().sendSuccess(() -> Component.literal("Shout cooldown removed!"), true);
+                                if (context.getSource().getPlayer().hasEffect(SHOUT_COOLDOWN)){
+                                    context.getSource().getPlayer().removeEffect(SHOUT_COOLDOWN);
+                                }
+                                return 1;
+                            } else {
+                                context.getSource().sendFailure(Component.literal("Shout cooldown is already 0!"));
+                                return 0;
+                            }
+                        }
+                                return 0;
+                            }
+                    ));
         });
 
     }

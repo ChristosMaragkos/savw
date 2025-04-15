@@ -78,7 +78,7 @@ public final class Words {
     /// Word list is now also derived from the registry.
     /// This is to avoid having to manually update the list when new words are added.
     /// This also allows other mods to add words of their own.
-    /// @see Shouts#initialize()
+    /// @see Shouts#initialize() Shout list initialization.
     public static List<ShoutWord> ALL_WORDS;
 
     public static void initialize() {

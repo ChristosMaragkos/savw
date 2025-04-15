@@ -12,7 +12,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import static com.savw.shout.Shouts.ALL_SHOUTS_FOR_CODEC;
+import static com.savw.shout.Shouts.*;
 
 /// # AbstractShout
 /// Abstract class representing a shout in the game.
@@ -76,12 +76,18 @@ public abstract class AbstractShout {
     ///
     /// @see com.savw.shout.Shouts#ALL_SHOUTS
     public static final Codec<AbstractShout> SHOUT_NAME_CODEC = Codec.STRING.flatXmap(
-            name -> ALL_SHOUTS_FOR_CODEC.stream()
-                    .filter(shout -> shout.getName().equals(name))
-                    .findFirst()
-                    .map(DataResult::success)
-                    .orElseGet(() -> DataResult.error(() -> "Shout not found: " + name)),
-            shout -> DataResult.success(shout.getName()) // Encoding just returns the name
+            name -> {
+                if (ALL_SHOUTS == null || ALL_SHOUTS.isEmpty()) {
+                    // Failsafe for early init
+                    return DataResult.success(DUMMY_INITIAL_SHOUT);
+                }
+                return ALL_SHOUTS.stream()
+                        .filter(shout -> shout.getName().equals(name))
+                        .findFirst()
+                        .map(DataResult::success)
+                        .orElseGet(() -> DataResult.success(DUMMY_INITIAL_SHOUT));
+            },
+            shout -> DataResult.success(shout.getName())
     );
 
     public ShoutWord getFirstWord() {
