@@ -130,7 +130,7 @@ public final class Shouts {
     ));
 
     /// The shout list is initialized when the server starts.
-    /// server starts and are derived dynamically from {@link com.savw.registry.SkyAboveVoiceWithinRegistries#SHOUTS the SHOUTS registry}.
+    /// References to Shouts through Lists are derived dynamically from {@link com.savw.registry.SkyAboveVoiceWithinRegistries#SHOUTS the SHOUTS registry}.
     /// This is done to avoid the need to manually update the lists.
     /// This also finally allows other mods to add shouts of their own.
     /// @since Lists have been present since 0.0.1, but were not derived from the registry until 0.0.3.
@@ -153,7 +153,7 @@ public final class Shouts {
     }
 
     /// This method is no longer deprecated as of 0.0.3! With the overhaul of shout encoding,
-    /// getByNameToEncode(String name) was redundant and was removed, with all its usages replaced
+    /// getByNameToEncode(String name) became redundant and was removed, having all its usages replaced
     /// with this method.
     /// @since 0.0.1
     public static AbstractShout getShoutByName(String name) {

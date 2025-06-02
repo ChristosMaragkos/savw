@@ -46,7 +46,7 @@ dependencies {
 
 	include(modImplementation "io.wispforest:owo-lib:${project.owo_version}")
 
-	include(modImplementation "curse.maven:scheduledtickdispatcherlib-1236960:${project.std}")
+	include(modImplementation "curse.maven:scheduledtickdispatcherlib-1236960:6402956")
 }
 
 processResources {
