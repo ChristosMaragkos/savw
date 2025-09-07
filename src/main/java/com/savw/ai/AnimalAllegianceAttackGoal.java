@@ -1,6 +1,5 @@
 package com.savw.ai;
 
-import com.savw.SkyAboveVoiceWithin;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
@@ -140,7 +139,6 @@ public class AnimalAllegianceAttackGoal extends MeleeAttackGoal {
                 chaseTicks = 0;
             }
             else {
-                SkyAboveVoiceWithin.LOGGER.info("New target is null");
                 // Bodyguard fallback: stay near the player
                 double distSq = this.affectedMob.distanceToSqr(player);
 
