@@ -50,7 +50,7 @@ public class WordWallBlockEntity extends BlockEntity implements TickableBlockEnt
         super(WORD_WALL_BLOCK_ENTITY_TYPE, pos, blockState);
     }
 
-    private final HashMap<Block, Block> SMART_TO_DUMB_BLOCK_MAP = new HashMap<>(Map.of(
+    private static final HashMap<Block, Block> SMART_TO_DUMB_BLOCK_MAP = new HashMap<>(Map.of(
             SMART_ETCHED_DEEPSLATE, DUMB_ETCHED_DEEPSLATE,
             SMART_ETCHED_BLACKSTONE, DUMB_ETCHED_BLACKSTONE,
             SMART_ETCHED_END_STONE, DUMB_ETCHED_END_STONE

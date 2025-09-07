@@ -10,8 +10,6 @@ import java.util.List;
 import static com.savw.SkyAboveVoiceWithin.withModId;
 import static com.savw.registry.SkyAboveVoiceWithinRegistries.WORDS;
 
-
-@SuppressWarnings("SpellCheckingInspection")
 public final class Words {
 
     /// ##### Dummy words to avoid using null as an initial Shout.
@@ -74,6 +72,12 @@ public final class Words {
     public static final ShoutWord Lun = registerWord(ShoutWord.create("Lun", 50, 40, "Leech"));
 
     public static final ShoutWord Aus = registerWord(ShoutWord.create("Aus", 60, 45, "Suffer"));
+
+    public static final ShoutWord Raan = registerWord(ShoutWord.create("Raan", 25, 15, "Animal"));
+
+    public static final ShoutWord Mir = registerWord(ShoutWord.create("Mir", 35, 20, "Allegiance"));
+
+    public static final ShoutWord Tah = registerWord(ShoutWord.create("Tah", 45, 25, "Pack"));
 
     /// Word list is now also derived from the registry.
     /// This is to avoid having to manually update the list when new words are added.

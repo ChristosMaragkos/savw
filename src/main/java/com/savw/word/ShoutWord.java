@@ -25,6 +25,11 @@ public class ShoutWord {
     /// This is indicative of the fact that this class is a singleton.
     /// To create your own ShoutWord instance, use the static factory method `create`
     /// and pass its output into a static final field.
+    ///
+    ///
+    /// Literally disregard whatever the hell past me just wrote here.
+    /// I meant to say that INSTANCES of ShoutWord are singletons.
+    /// Meaning that there is only one instance of each word in the game.
     private ShoutWord(String name, int cooldown, int costToUnlock, String meaning){
         this.name = name;
         this.cooldown = cooldown;

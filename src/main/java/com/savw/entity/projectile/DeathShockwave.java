@@ -61,6 +61,7 @@ public class DeathShockwave extends AbstractShockwaveProjectile{
                 target.addEffect(new MobEffectInstance(MOVEMENT_SLOWDOWN, 120, 2, true, false));
                 if (target instanceof Player player && player.getHealth() <= 6f && !hasDisplayedFatalMessage[0]) {
                     hasDisplayedFatalMessage[0] = true;
+                    serverLevel.playSound(null, player.blockPosition(), SoundEvents.WARDEN_HEARTBEAT, player.getSoundSource());
                     player.displayClientMessage(Component.literal("You are at death's door..."), true);
                 }
             }

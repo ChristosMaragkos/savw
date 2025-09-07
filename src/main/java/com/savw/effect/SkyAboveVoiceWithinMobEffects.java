@@ -40,6 +40,14 @@ public class SkyAboveVoiceWithinMobEffects {
                             .addAttributeModifier(Attributes.MAX_HEALTH, ResourceLocation.withDefaultNamespace("effect.health_boost"), -1f, AttributeModifier.Operation.ADD_VALUE)
                             .addAttributeModifier(Attributes.ARMOR, withModId("effect.armor"), -1f, AttributeModifier.Operation.ADD_VALUE));
 
+    public static final Holder<MobEffect> ANIMAL_ALLEGIANCE_ENRAGED =
+            Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT,
+                    withModId("animal_allegiance_enraged"),
+                    new AnimalAllegianceEnragedMobEffect()
+                            .addAttributeModifier(Attributes.MOVEMENT_SPEED, withModId("effect.movement_speed"), 0.15f, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                            .addAttributeModifier(Attributes.FLYING_SPEED, withModId("effect.flying_speed"), 0.15f, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                            .addAttributeModifier(Attributes.ATTACK_DAMAGE, withModId("effect.attack_damage"), 2f, AttributeModifier.Operation.ADD_VALUE));
+
     public static void initialize(){
         SkyAboveVoiceWithin.LOGGER.info("Sky Above, Voice Within effects initialized!");
     }
