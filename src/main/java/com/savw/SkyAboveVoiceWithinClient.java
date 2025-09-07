@@ -35,6 +35,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.IntFunction;
 
 import static com.savw.SkyAboveVoiceWithin.*;
 import static com.savw.shout.Shouts.*;
@@ -176,98 +177,104 @@ public class SkyAboveVoiceWithinClient implements ClientModInitializer {
         final int[] wordsQueued = {0};
 
         ClientTickEvents.START_CLIENT_TICK.register(client -> {
-            if (client.player != null) {
+            if (client.player == null) {
+                return;
+            }
 
+            ClientPlayNetworking.send(new RequestCooldownSyncC2SPayload(client.player.getUUID()));
 
-                ClientPlayNetworking.send(new RequestCooldownSyncC2SPayload(client.player.getUUID()));
+            if (shoutKeybind.consumeClick()) {
+                ClientPlayNetworking.send(new DemandShoutAndWordSyncPayload(client.player.getUUID()));
+            }
 
-                if (shoutKeybind.consumeClick()) {
-                    ClientPlayNetworking.send(new DemandShoutAndWordSyncPayload(client.player.getUUID()));
+            if (toggleShoutMenuKeybind.consumeClick()) {
+                ClientPlayNetworking.send(new DemandShoutAndWordSyncPayload(client.player.getUUID()));
+                client.setScreen(new ShoutSelectionScreen(1));
+            }
+
+            // --- SHOUT MECHANICS --- \\
+            if (client.level == null) {
+                return;
+            }
+
+            boolean canShout =
+                    shoutKeybind.isDown()
+                            && clientPlayerData.currentShout != DUMMY_INITIAL_SHOUT
+                            && clientPlayerData.currentShout.getUnlockedWordsCount(clientPlayerData.unlockedWords) != 0
+                            && clientPlayerData.shoutCooldown <= 0;
+
+            if (canShout) {
+
+                if (!isShouting[0]) {
+                    // Just started holding
+                    shoutActionTick[0] = 0;
+                    wordsQueued[0] = 0;
+                    isShouting[0] = true;
                 }
 
-                if (toggleShoutMenuKeybind.consumeClick()) {
-                    ClientPlayNetworking.send(new DemandShoutAndWordSyncPayload(client.player.getUUID()));
-                    client.setScreen(new ShoutSelectionScreen(1));
+                shoutActionTick[0]++; // Increment while holding
+
+                AbstractShout currentShout = clientPlayerData.currentShout;
+                int unlockedWordsForShout = currentShout.getUnlockedWordsCount(clientPlayerData.unlockedWords);
+
+                IntFunction<String> stagedMsg = n -> switch (n) {
+                    case 1 -> currentShout.getFirstWord().getName() + "...";
+                    case 2 -> currentShout.getFirstWord().getName() + "... " + currentShout.getSecondWord().getName() + "...";
+                    case 3 -> currentShout.getFirstWord().getName() + " " + currentShout.getSecondWord().getName() + " " + currentShout.getThirdWord().getName() + "!";
+                    default -> "";
+                };
+
+                IntFunction<String> finalMsg = n -> switch (n) {
+                    case 1 -> currentShout.getFirstWord().getName() + "!";
+                    case 2 -> currentShout.getFirstWord().getName() + " " + currentShout.getSecondWord().getName() + "!";
+                    case 3 -> currentShout.getFirstWord().getName() + " " + currentShout.getSecondWord().getName() + " " + currentShout.getThirdWord().getName() + "!";
+                    default -> "";
+                };
+
+                if (unlockedWordsForShout >= 1 && shoutActionTick[0] == 1) {
+                    client.player.displayClientMessage(Component.literal(stagedMsg.apply(1)), true);
+                    wordsQueued[0] = 1;
+                }
+                if (unlockedWordsForShout >= 2 && shoutActionTick[0] == 15) {
+                    client.player.displayClientMessage(Component.literal(stagedMsg.apply(2)), true);
+                    wordsQueued[0] = 2;
+                }
+                if (unlockedWordsForShout >= 3 && shoutActionTick[0] == 30) {
+                    client.player.displayClientMessage(Component.literal(stagedMsg.apply(3)), true);
+                    wordsQueued[0] = 3;
                 }
 
-                // --- SHOUT MECHANICS --- \\
-                if (client.level == null) {
-                    return;
-                }
-
-                if (shoutKeybind.isDown() && clientPlayerData.currentShout != DUMMY_INITIAL_SHOUT &&
-                        clientPlayerData.currentShout.getUnlockedWordsCount(clientPlayerData.unlockedWords) != 0
-                && clientPlayerData.shoutCooldown <= 0) {
-
-
-                    if (!isShouting[0]) {
-                        // Just started holding
-                        shoutActionTick[0] = 0;
-                        wordsQueued[0] = 0;
-                        isShouting[0] = true;
-                    }
-
-                    shoutActionTick[0]++; // Increment while holding
-
-                    AbstractShout currentShout = clientPlayerData.currentShout;
-                    int unlockedWordsForShout = currentShout.getUnlockedWordsCount(clientPlayerData.unlockedWords);
-
-                    if (unlockedWordsForShout >= 1 && shoutActionTick[0] == 1) {
-                        client.player.displayClientMessage(Component.literal(currentShout.getFirstWord().getName() + "..."), true);
-                        wordsQueued[0] = 1;
-                    }
-                    if (unlockedWordsForShout >= 2 && shoutActionTick[0] == 15) {
-                        client.player.displayClientMessage(Component.literal(currentShout.getFirstWord().getName() + "... " + currentShout.getSecondWord().getName() + "..."), true);
-                        wordsQueued[0] = 2;
-                    }
-                    if (unlockedWordsForShout >= 3 && shoutActionTick[0] == 30) {
-                        client.player.displayClientMessage(Component.literal(currentShout.getFirstWord().getName() + " " + currentShout.getSecondWord().getName() + " " + currentShout.getThirdWord().getName() + "!"), true);
-                        wordsQueued[0] = 3;
-                    }
-
-                    // If the queued words match the unlocked words, trigger the shout immediately
-                    if (wordsQueued[0] == unlockedWordsForShout) {
-                        isShouting[0] = false;
-                        shoutActionTick[0] = 0;
-
-                        switch (unlockedWordsForShout) {
-                            case 1 -> client.player.displayClientMessage(Component.literal(currentShout.getFirstWord().getName() + "!"), true);
-
-                            case 2 -> client.player.displayClientMessage(Component.literal(currentShout.getFirstWord().getName() + " "
-                                    + currentShout.getSecondWord().getName() + "!"), true);
-
-                            case 3 -> client.player.displayClientMessage(Component.literal(currentShout.getFirstWord().getName() + " "
-                                    + currentShout.getSecondWord().getName() + " " + currentShout.getThirdWord().getName() + "!"), true);
-                        }
-                        ClientPlayNetworking.send(new UseShoutC2SPayload(client.player.getId(), wordsQueued[0]));
-                        wordsQueued[0] = 0; // Reset so next shout works correctly
-                    }
-
-                } else if (isShouting[0]) {
-                    // Key was released, finalize the shout
+                // If the queued words match the unlocked words, trigger the shout immediately
+                if (wordsQueued[0] == unlockedWordsForShout) {
                     isShouting[0] = false;
                     shoutActionTick[0] = 0;
 
-                    // Prevents multiple triggers during the same key press
-                    int wordsUsed = wordsQueued[0];
-                    wordsQueued[0] = 0;
+                    client.player.displayClientMessage(Component.literal(finalMsg.apply(unlockedWordsForShout)), true);
 
-                    if (wordsUsed > 0) {
-                        switch (wordsUsed) {
-                            case 1 ->
-                                    client.player.displayClientMessage(Component.literal(clientPlayerData.currentShout.getFirstWord().getName() + "!"), true);
+                    ClientPlayNetworking.send(new UseShoutC2SPayload(client.player.getId(), wordsQueued[0]));
+                    wordsQueued[0] = 0; // Reset so next shout works correctly
+                }
 
-                            case 2 ->
-                                    client.player.displayClientMessage(Component.literal(clientPlayerData.currentShout.getFirstWord().getName() + " "
-                                            + clientPlayerData.currentShout.getSecondWord().getName() + "!"), true);
+            } else if (isShouting[0]) {
+                // Key was released, finalize the shout
+                isShouting[0] = false;
+                shoutActionTick[0] = 0;
 
-                            case 3 ->
-                                    client.player.displayClientMessage(Component.literal(clientPlayerData.currentShout.getFirstWord().getName() + " "
-                                            + clientPlayerData.currentShout.getSecondWord().getName() + " "
-                                            + clientPlayerData.currentShout.getThirdWord().getName() + "!"), true);
-                        }
-                        ClientPlayNetworking.send(new UseShoutC2SPayload(client.player.getId(), wordsUsed));
-                    }
+                // Prevents multiple triggers during the same key press
+                int wordsUsed = wordsQueued[0];
+                wordsQueued[0] = 0;
+
+                if (wordsUsed > 0) {
+                    AbstractShout current = clientPlayerData.currentShout;
+                    IntFunction<String> finalMsg = n -> switch (n) {
+                        case 1 -> current.getFirstWord().getName() + "!";
+                        case 2 -> current.getFirstWord().getName() + " " + current.getSecondWord().getName() + "!";
+                        case 3 -> current.getFirstWord().getName() + " " + current.getSecondWord().getName() + " " + current.getThirdWord().getName() + "!";
+                        default -> "";
+                    };
+
+                    client.player.displayClientMessage(Component.literal(finalMsg.apply(wordsUsed)), true);
+                    ClientPlayNetworking.send(new UseShoutC2SPayload(client.player.getId(), wordsUsed));
                 }
             }
         });
