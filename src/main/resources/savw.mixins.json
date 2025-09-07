@@ -3,6 +3,7 @@
   "package": "com.savw.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "PathfinderMobMixin"
   ],
   "injectors": {
     "defaultRequire": 1

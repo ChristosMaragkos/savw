@@ -129,8 +129,19 @@ public final class Shouts {
             END
     ));
 
+    public static final AnimalAllegianceShout ANIMAL_ALLEGIANCE = registerShout(AbstractShout.createShout(
+            AnimalAllegianceShout.class,
+            "Animal Allegiance",
+            "A Shout for help from the beasts of the wild,\nwho come to fight in your defense.",
+            Raan,
+            Mir,
+            Tah,
+            ResourceLocation.fromNamespaceAndPath(SkyAboveVoiceWithin.MOD_ID, "textures/gui/sprites/placeholder.png"),
+            OVERWORLD
+    ));
+
     /// The shout list is initialized when the server starts.
-    /// References to Shouts through Lists are derived dynamically from {@link com.savw.registry.SkyAboveVoiceWithinRegistries#SHOUTS the SHOUTS registry}.
+    /// References to Shouts through Lists are derived dynamically from {@link com.savw.registry.SkyAboveVoiceWithinRegistries#SHOUTS the OVERWORLD_SHOUTS registry}.
     /// This is done to avoid the need to manually update the lists.
     /// This also finally allows other mods to add shouts of their own.
     /// @since Lists have been present since 0.0.1, but were not derived from the registry until 0.0.3.
