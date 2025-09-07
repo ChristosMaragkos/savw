@@ -16,9 +16,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
-public class AnimalAllegianceShout extends AbstractShout{
+public final class AnimalAllegianceShout extends AbstractShout{
 
-    protected AnimalAllegianceShout(String name, String description, ShoutWord firstWord, ShoutWord secondWord, ShoutWord thirdWord, ResourceLocation iconLocation, ResourceKey<Level> dimension) {
+    private AnimalAllegianceShout(String name, String description, ShoutWord firstWord, ShoutWord secondWord, ShoutWord thirdWord, ResourceLocation iconLocation, ResourceKey<Level> dimension) {
         super(name, description, firstWord, secondWord, thirdWord, iconLocation, dimension);
     }
 
