@@ -40,7 +40,7 @@ public final class WhirlwindSprintShout extends AbstractShout{
                 };
 
                 for (Vec3 offset : bodyOffsets) {
-                    serverLevel.sendParticles(ParticleTypes.DUST_PLUME,
+                    serverLevel.sendParticles(ParticleTypes.CAMPFIRE_COSY_SMOKE,
                             player.getX() + offset.x,
                             player.getY() + offset.y,
                             player.getZ() + offset.z,
@@ -48,7 +48,7 @@ public final class WhirlwindSprintShout extends AbstractShout{
                             0.05,
                             0.05,
                             0.05,
-                            0f
+                            0.01f
                             );
                 }
             }
