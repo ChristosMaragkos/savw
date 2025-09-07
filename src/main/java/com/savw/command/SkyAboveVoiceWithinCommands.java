@@ -94,8 +94,8 @@ public class SkyAboveVoiceWithinCommands {
 
                                         List<ShoutWord> wordsToUnlock = switch (shout.getUnlockedWordsCount(unlockedWords)){
                                             case 3 -> List.of();
-                                            case 2 -> List.of(shout.getFirstWord());
-                                            case 1 -> List.of(shout.getFirstWord(), shout.getSecondWord());
+                                            case 2 -> List.of(shout.getThirdWord());
+                                            case 1 -> List.of(shout.getSecondWord(), shout.getThirdWord());
                                             case 0 -> List.of(shout.getFirstWord(), shout.getSecondWord(), shout.getThirdWord());
                                             default -> throw new IllegalStateException("Unexpected value: " + shout.getUnlockedWordsCount(unlockedWords));
                                         };
